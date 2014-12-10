@@ -11,7 +11,7 @@ public class State {
 	private Map<Integer, Set<Integer>> outgoingTrans;
 	
 	public State(int id){
-		this.setId(id);
+		this.id = id;
 		this.outgoingTrans = new HashMap<Integer, Set<Integer>>();
 	}
 
@@ -43,11 +43,8 @@ public class State {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 	
-	public Set<Integer> outgoingLabels(){
+	public Set<Integer> getOutgoingLabels(){
 		return outgoingTrans.keySet();
 	}
 }
