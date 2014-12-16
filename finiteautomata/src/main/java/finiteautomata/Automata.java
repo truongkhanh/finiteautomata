@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.Stack;
 
 /**
- * States are numbered from 0. State 0 is the initial state
+ * States are labeled from 0 to V-1 where V is number of states.
  * Labels are numbered from 0. Label 0 is preserved for epsilon label (empty label)
  * @author khanh
  *
@@ -27,6 +27,22 @@ public class Automata {
 		return acceptingStates;
 	}
 
+	
+	
+	public int getInitState() {
+		return initState;
+	}
+
+
+	public void setInitState(int initState) {
+		this.initState = initState;
+	}
+
+	/**
+	 * Init state index
+	 */
+	private int initState;
+	
 	/**
 	 * State with outgoing transition
 	 */
@@ -42,7 +58,8 @@ public class Automata {
 	 */
 	private Set<Integer> acceptingStates;
 	
-	public Automata(int numStates, int numLabels){
+	public Automata(int initState, int numStates, int numLabels){
+		this.initState = initState;
 		this.states = new State[numStates];
 		for(int i = 0; i < numStates; i++){
 			this.states[i] = new State(i);
@@ -51,12 +68,14 @@ public class Automata {
 		this.numLabels = numLabels;
 	}
 	
-	public Automata(State[] states, int numLabels){
+	public Automata(int initState, State[] states, int numLabels){
+		this.initState = initState;
 		this.states = states;
 		this.numLabels = numLabels;
 	}
 	
-	public Automata(List<State> states, int numLabels){
+	public Automata(int initState, List<State> states, int numLabels){
+		this.initState = initState;
 		this.states = new State[states.size()];
 		for(int i = 0; i < states.size(); i++){
 			this.states[i] = states.get(i);

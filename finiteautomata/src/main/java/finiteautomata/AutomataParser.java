@@ -8,7 +8,7 @@ import java.util.Set;
 public class AutomataParser {
 	
 	public static Automata read(InputStream inputStream){
-		//numStates numLabels
+		//initState numStates numLabels 
 		//num Trans
 		//source label dest
 		//num AcceptingStates
@@ -16,10 +16,12 @@ public class AutomataParser {
 		
 		Scanner scanner = new Scanner(inputStream);
 		
+		int initState = scanner.nextInt();
 		int numStates = scanner.nextInt();
 		int numLabels = scanner.nextInt();
 		
-		Automata automata = new Automata(numStates, numLabels);
+		
+		Automata automata = new Automata(initState, numStates, numLabels);
 		
 		int numTrans = scanner.nextInt();
 		for(int i = 0; i < numTrans; i++){
@@ -50,6 +52,8 @@ public class AutomataParser {
 		char SPACE = ' ';
 		char NEW_LINE = '\n';
 		
+		result.append(automata.getInitState());
+		result.append(SPACE);
 		result.append(automata.getStates().length);
 		result.append(SPACE);
 		result.append(automata.getNumLabels());

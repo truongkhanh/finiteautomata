@@ -28,7 +28,7 @@ public class LanguageChecking {
 
 		//store nodes waiting to visit
 		Stack<Integer> workingStates = new Stack<Integer>();
-		workingStates.push(0);
+		workingStates.push(dfa.getInitState());
 		
 		Stack<Integer> labels = new Stack<Integer>();
 		int INIT_LABEL = -1;

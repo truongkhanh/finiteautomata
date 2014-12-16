@@ -15,11 +15,12 @@ public class AutomataConverter {
 		
 		Stack<Set<Integer>> workingStates = new Stack<Set<Integer>>();
 		Set<Integer> initSet = new HashSet<Integer>();
-		initSet.add(0);
+		initSet.add(automata.getInitState());
 		initSet = automata.getEpsilonClosure(initSet);
 		
 		workingStates.push(initSet);
 		
+		//state 0 will be the init state in new DFA
 		State initInDFA = new State(0);
 		mapStates.put(initSet, initInDFA);
 		allStatesDFA.add(initInDFA);
@@ -48,7 +49,7 @@ public class AutomataConverter {
 			}
 		}
 		
-		Automata dfa = new Automata(allStatesDFA, automata.getNumLabels());
+		Automata dfa = new Automata(0, allStatesDFA, automata.getNumLabels());
 		
 		//compute accepting states
 		Set<Integer> acceptingDFA = new HashSet<Integer>();
