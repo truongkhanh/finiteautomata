@@ -114,4 +114,70 @@ public class AcceptanceChecking {
 		}
 		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
 	}
+	
+	@Test
+	public void test3(){
+		//corresponding dfa
+//		0 5 3
+//		10
+//		0 1 1
+//		0 2 2
+//		1 1 1
+//		1 2 3
+//		2 1 1
+//		2 2 2
+//		3 1 1
+//		3 2 4
+//		4 1 1
+//		4 2 2
+//		1
+//		4 
+		
+		Automata automata = new Automata(0, 11, 3);
+		automata.addTrans(0, 0, 1);
+		automata.addTrans(0, 0, 7);
+		
+		automata.addTrans(1, 0, 2);
+		automata.addTrans(1, 0, 4);
+		
+		automata.addTrans(2, 1, 3);
+		
+		automata.addTrans(3, 0, 6);
+		
+		automata.addTrans(4, 2, 5);
+		
+		automata.addTrans(5, 0, 6);
+		
+		automata.addTrans(6, 0, 7);
+		automata.addTrans(6, 0, 1);
+		
+		automata.addTrans(7, 1, 8);
+		
+		automata.addTrans(8, 2, 9);
+		
+		automata.addTrans(9, 2, 10);
+		
+		Set<Integer> acceptingStates = new HashSet<Integer>();
+		
+		automata.setAcceptingStates(acceptingStates);
+		
+		Assert.assertTrue(LanguageChecking.isEmpty(automata));
+		
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{1, 1, 1, 1, 1, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 1, 2, 1, 1, 2, 2}));
+		
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 2, 2, 2, 2, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
+		
+		//universal checking
+		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		Assert.assertTrue(notAcceptedWord != null);
+		
+		int[] wordTemp = new int[notAcceptedWord.size()];
+		for(int i = 0; i < wordTemp.length; i++){
+			wordTemp[i] = notAcceptedWord.get(i);
+		}
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
+	}
 }
