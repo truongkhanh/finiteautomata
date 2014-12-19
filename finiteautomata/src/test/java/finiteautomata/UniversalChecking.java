@@ -5,7 +5,7 @@ import java.io.ByteArrayInputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class LangugeCheckingTest {
+public class UniversalChecking {
 	@Test
 	public void test1(){
 		char NEW_LINE = '\n';
