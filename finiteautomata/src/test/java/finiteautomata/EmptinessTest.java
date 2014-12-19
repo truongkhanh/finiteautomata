@@ -7,7 +7,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class AcceptanceChecking {
+public class EmptinessTest {
 
 	@Test
 	public void test1(){

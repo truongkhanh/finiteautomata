@@ -1,14 +1,12 @@
 package finiteautomata;
 
 import java.io.ByteArrayInputStream;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class UniversalChecking {
+public class UniversalTest {
 	@Test
 	public void test1(){
 		char NEW_LINE = '\n';
