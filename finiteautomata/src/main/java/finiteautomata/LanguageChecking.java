@@ -88,7 +88,7 @@ public class LanguageChecking {
 		}
 		
 
-		return new ArrayList<Integer>();
+		return null;
 	}
 	
 	/**

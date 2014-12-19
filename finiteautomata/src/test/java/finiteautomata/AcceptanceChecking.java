@@ -11,12 +11,12 @@ public class AcceptanceChecking {
 
 	@Test
 	public void test1(){
-		Automata automata = new Automata(0, 2, 3);
-		automata.addTrans(0, 1, 1);
-		automata.addTrans(1, 2, 1);
+		Automata automata = new Automata(1, 2, 3);
+		automata.addTrans(1, 1, 0);
+		automata.addTrans(0, 2, 0);
 		
 		Set<Integer> acceptingStates = new HashSet<Integer>();
-		acceptingStates.add(1);
+		acceptingStates.add(0);
 		
 		automata.setAcceptingStates(acceptingStates);
 		
@@ -36,6 +36,16 @@ public class AcceptanceChecking {
 		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 1, 2, 2}));
 		
 		
+		
+		//universal checking
+		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		Assert.assertTrue(notAcceptedWord != null);
+		
+		int[] wordTemp = new int[notAcceptedWord.size()];
+		for(int i = 0; i < wordTemp.length; i++){
+			wordTemp[i] = notAcceptedWord.get(i);
+		}
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
 	}
 	
 	@Test
@@ -94,6 +104,14 @@ public class AcceptanceChecking {
 		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 2, 2, 2, 2, 2, 2}));
 		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
 		
+		//universal checking
+		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		Assert.assertTrue(notAcceptedWord != null);
 		
+		int[] wordTemp = new int[notAcceptedWord.size()];
+		for(int i = 0; i < wordTemp.length; i++){
+			wordTemp[i] = notAcceptedWord.get(i);
+		}
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
 	}
 }

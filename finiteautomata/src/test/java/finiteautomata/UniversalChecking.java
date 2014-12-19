@@ -1,6 +1,7 @@
 package finiteautomata;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,7 +33,15 @@ public class UniversalChecking {
 		String originalAutomata = s.toString();
 		Automata automata = AutomataParser.read(new ByteArrayInputStream(originalAutomata.getBytes()));
 		
-		Assert.assertFalse(LanguageChecking.isUniversal(automata).size() == 0);
+		//universal checking
+		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		Assert.assertTrue(notAcceptedWord != null);
+		
+		int[] wordTemp = new int[notAcceptedWord.size()];
+		for(int i = 0; i < wordTemp.length; i++){
+			wordTemp[i] = notAcceptedWord.get(i);
+		}
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
 	}
 	
 	@Test
@@ -62,7 +71,15 @@ public class UniversalChecking {
 		Automata automata = AutomataParser.read(new ByteArrayInputStream(originalAutomata.getBytes()));
 		automata = AutomataConverter.toDFA(automata);
 		
-		Assert.assertFalse(LanguageChecking.isUniversal(automata).size() == 0);
+		//universal checking
+		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		Assert.assertTrue(notAcceptedWord != null);
+		
+		int[] wordTemp = new int[notAcceptedWord.size()];
+		for(int i = 0; i < wordTemp.length; i++){
+			wordTemp[i] = notAcceptedWord.get(i);
+		}
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
 	}
 	
 	@Test
@@ -87,7 +104,9 @@ public class UniversalChecking {
 		String originalAutomata = s.toString();
 		Automata automata = AutomataParser.read(new ByteArrayInputStream(originalAutomata.getBytes()));
 		
-		Assert.assertTrue(LanguageChecking.isUniversal(automata).size() == 0);
+		//universal checking
+		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		Assert.assertTrue(notAcceptedWord == null);
 	}
 	
 	@Test
@@ -113,7 +132,9 @@ public class UniversalChecking {
 		Automata automata = AutomataParser.read(new ByteArrayInputStream(originalAutomata.getBytes()));
 		automata = AutomataConverter.toDFA(automata);
 		
-		Assert.assertTrue(LanguageChecking.isUniversal(automata).size() == 0);
+		//universal checking
+		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		Assert.assertTrue(notAcceptedWord == null);
 	}
 	
 	@Test
@@ -139,6 +160,14 @@ public class UniversalChecking {
 		Automata automata = AutomataParser.read(new ByteArrayInputStream(originalAutomata.getBytes()));
 		automata = AutomataConverter.toDFA(automata);
 		
-		Assert.assertFalse(LanguageChecking.isUniversal(automata).size() == 0);
+		//universal checking
+		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		Assert.assertTrue(notAcceptedWord != null);
+		
+		int[] wordTemp = new int[notAcceptedWord.size()];
+		for(int i = 0; i < wordTemp.length; i++){
+			wordTemp[i] = notAcceptedWord.get(i);
+		}
+		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
 	}
 }
