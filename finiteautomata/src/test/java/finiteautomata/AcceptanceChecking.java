@@ -28,12 +28,12 @@ public class AcceptanceChecking {
 			Assert.assertEquals(2, word.get(i).intValue());
 		}
 		
-		Assert.assertTrue(LanguageChecking.acceptWord(automata, new int[]{1}));
-		Assert.assertTrue(LanguageChecking.acceptWord(automata, new int[]{1, 2}));
-		Assert.assertTrue(LanguageChecking.acceptWord(automata, new int[]{1, 2, 2, 2, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{1}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{1, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{1, 2, 2, 2, 2}));
 		
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{1, 2, 1, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 1, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 2, 1, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 1, 2, 2}));
 		
 		
 		
@@ -45,7 +45,7 @@ public class AcceptanceChecking {
 		for(int i = 0; i < wordTemp.length; i++){
 			wordTemp[i] = notAcceptedWord.get(i);
 		}
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
 	}
 	
 	@Test
@@ -97,12 +97,12 @@ public class AcceptanceChecking {
 		
 		Assert.assertFalse(LanguageChecking.isEmpty(automata));
 		
-		Assert.assertTrue(LanguageChecking.acceptWord(automata, new int[]{1, 1, 1, 1, 1, 2, 2}));
-		Assert.assertTrue(LanguageChecking.acceptWord(automata, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
-		Assert.assertTrue(LanguageChecking.acceptWord(automata, new int[]{2, 1, 2, 1, 1, 2, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{2, 1, 2, 1, 1, 2, 2}));
 		
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 2, 2, 2, 2, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 2, 2, 2, 2, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
 		
 		//universal checking
 		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
@@ -112,7 +112,7 @@ public class AcceptanceChecking {
 		for(int i = 0; i < wordTemp.length; i++){
 			wordTemp[i] = notAcceptedWord.get(i);
 		}
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
 	}
 	
 	@Test
@@ -163,12 +163,12 @@ public class AcceptanceChecking {
 		
 		Assert.assertTrue(LanguageChecking.isEmpty(automata));
 		
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{1, 1, 1, 1, 1, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 1, 2, 1, 1, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 1, 2, 1, 1, 2, 2}));
 		
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{2, 2, 2, 2, 2, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 2, 2, 2, 2, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
 		
 		//universal checking
 		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
@@ -178,6 +178,6 @@ public class AcceptanceChecking {
 		for(int i = 0; i < wordTemp.length; i++){
 			wordTemp[i] = notAcceptedWord.get(i);
 		}
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
 	}
 }

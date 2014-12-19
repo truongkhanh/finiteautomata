@@ -1,7 +1,9 @@
 package finiteautomata;
 
 import java.io.ByteArrayInputStream;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,7 +43,7 @@ public class UniversalChecking {
 		for(int i = 0; i < wordTemp.length; i++){
 			wordTemp[i] = notAcceptedWord.get(i);
 		}
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
 	}
 	
 	@Test
@@ -79,7 +81,7 @@ public class UniversalChecking {
 		for(int i = 0; i < wordTemp.length; i++){
 			wordTemp[i] = notAcceptedWord.get(i);
 		}
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
 	}
 	
 	@Test
@@ -168,6 +170,8 @@ public class UniversalChecking {
 		for(int i = 0; i < wordTemp.length; i++){
 			wordTemp[i] = notAcceptedWord.get(i);
 		}
-		Assert.assertFalse(LanguageChecking.acceptWord(automata, wordTemp));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
 	}
+	
+	
 }

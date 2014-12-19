@@ -61,12 +61,12 @@ public class NFA2DFATest {
 		
 		Assert.assertFalse(LanguageChecking.isEmpty(automata));
 		
-		Assert.assertTrue(LanguageChecking.acceptWord(dfa, new int[]{1, 1, 1, 1, 1, 2, 2}));
-		Assert.assertTrue(LanguageChecking.acceptWord(dfa, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
-		Assert.assertTrue(LanguageChecking.acceptWord(dfa, new int[]{2, 1, 2, 1, 1, 2, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(dfa, new int[]{1, 1, 1, 1, 1, 2, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(dfa, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(dfa, new int[]{2, 1, 2, 1, 1, 2, 2}));
 		
-		Assert.assertFalse(LanguageChecking.acceptWord(dfa, new int[]{2, 2, 2, 2, 2, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptWord(dfa, new int[]{1, 1, 1, 1, 1, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(dfa, new int[]{2, 2, 2, 2, 2, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(dfa, new int[]{1, 1, 1, 1, 1, 2}));
 	}
 	
 	@Test
@@ -109,12 +109,12 @@ public class NFA2DFATest {
 		
 		Assert.assertFalse(LanguageChecking.isEmpty(automata));
 		
-		Assert.assertTrue(LanguageChecking.acceptWord(dfa, new int[]{}));
-		Assert.assertTrue(LanguageChecking.acceptWord(dfa, new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}));
-		Assert.assertTrue(LanguageChecking.acceptWord(dfa, new int[]{1, 1, 1, 1, 2, 1, 2, 1, 2}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(dfa, new int[]{}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(dfa, new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}));
+		Assert.assertTrue(LanguageChecking.acceptsWord(dfa, new int[]{1, 1, 1, 1, 2, 1, 2, 1, 2}));
 		
-		Assert.assertFalse(LanguageChecking.acceptWord(dfa, new int[]{2, 1, 1, 1, 1}));
-		Assert.assertFalse(LanguageChecking.acceptWord(dfa, new int[]{1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(dfa, new int[]{2, 1, 1, 1, 1}));
+		Assert.assertFalse(LanguageChecking.acceptsWord(dfa, new int[]{1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2}));
 		
 	}
 }
