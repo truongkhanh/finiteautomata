@@ -34,7 +34,7 @@ public class UniversalTest {
 		Automata automata = AutomataParser.read(new ByteArrayInputStream(originalAutomata.getBytes()));
 		
 		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(notAcceptedWord != null);
 		
 		int[] wordTemp = new int[notAcceptedWord.size()];
@@ -72,7 +72,7 @@ public class UniversalTest {
 		automata = AutomataConverter.toDFA(automata);
 		
 		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(notAcceptedWord != null);
 		
 		int[] wordTemp = new int[notAcceptedWord.size()];
@@ -105,7 +105,7 @@ public class UniversalTest {
 		Automata automata = AutomataParser.read(new ByteArrayInputStream(originalAutomata.getBytes()));
 		
 		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(notAcceptedWord == null);
 	}
 	
@@ -133,7 +133,7 @@ public class UniversalTest {
 		automata = AutomataConverter.toDFA(automata);
 		
 		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(notAcceptedWord == null);
 	}
 	
@@ -161,7 +161,7 @@ public class UniversalTest {
 		automata = AutomataConverter.toDFA(automata);
 		
 		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(notAcceptedWord != null);
 		
 		int[] wordTemp = new int[notAcceptedWord.size()];

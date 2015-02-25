@@ -38,7 +38,7 @@ public class EmptinessTest {
 		
 		
 		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(notAcceptedWord != null);
 		
 		int[] wordTemp = new int[notAcceptedWord.size()];
@@ -105,7 +105,7 @@ public class EmptinessTest {
 		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
 		
 		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(notAcceptedWord != null);
 		
 		int[] wordTemp = new int[notAcceptedWord.size()];
@@ -171,7 +171,7 @@ public class EmptinessTest {
 		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
 		
 		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.isUniversal(automata);
+		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(notAcceptedWord != null);
 		
 		int[] wordTemp = new int[notAcceptedWord.size()];

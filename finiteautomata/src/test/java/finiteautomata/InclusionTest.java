@@ -29,7 +29,7 @@ public class InclusionTest {
 		
 		automata1.setAcceptingStates(acceptingStates);
 		
-		Assert.assertEquals(null, LanguageChecking.isUniversal(automata1));
+		Assert.assertEquals(null, LanguageChecking.findUnacceptingWord(automata1));
 		
 		Automata automata2 = new Automata(1, 2, 3);
 		automata2.addTrans(1, 1, 0);
@@ -112,5 +112,76 @@ public class InclusionTest {
 		
 		Assert.assertTrue(LanguageChecking.isSubSet(automata1, automata2) == null);
 
+	}
+	
+	@Test
+	public void whenTwoAutomataAreSameThenCounterExampleIsNull(){
+		Automata automata = new Automata(0, 3, 3);
+		automata.addTrans(0, 1, 1);
+		automata.addTrans(0, 2, 1);
+		automata.addTrans(1, 1, 2);
+		automata.addTrans(1, 2, 2);
+		
+		Set<Integer> accepting = new HashSet<Integer>();
+		accepting.add(1);
+		accepting.add(2);
+		automata.setAcceptingStates(accepting);
+		
+		List<Integer> counterExample = LanguageChecking.isSubSet(automata, automata);
+		
+		Assert.assertNull(counterExample);
+	}
+	
+	@Test
+	public void whenOneAutomatonIsSubsetButNotEqualThenCounterExampleIsNull(){
+		Automata automata1 = new Automata(0, 3, 3);
+		automata1.addTrans(0, 1, 1);
+		automata1.addTrans(1, 1, 2);
+		automata1.addTrans(1, 2, 2);
+		
+		
+		Automata automata2 = new Automata(0, 3, 3);
+		automata2.addTrans(0, 1, 1);
+		automata2.addTrans(0, 2, 1);
+		automata2.addTrans(1, 1, 2);
+		automata2.addTrans(1, 2, 2);
+		
+		Set<Integer> accepting = new HashSet<Integer>();
+		accepting.add(1);
+		accepting.add(2);
+		automata1.setAcceptingStates(accepting);
+		automata2.setAcceptingStates(accepting);
+		
+		List<Integer> counterExample = LanguageChecking.isSubSet(automata1, automata2);
+		
+		Assert.assertNull(counterExample);
+	}
+	
+	@Test
+	public void whenOneAutomatonIsNotSubsetThenTheCounterExampleIsNotNull(){
+		Automata automata1 = new Automata(0, 3, 3);
+		automata1.addTrans(0, 1, 1);
+		automata1.addTrans(1, 1, 2);
+		automata1.addTrans(1, 2, 2);
+		Set<Integer> accepting = new HashSet<Integer>();
+		accepting.add(1);
+		accepting.add(2);
+		automata1.setAcceptingStates(accepting);
+		
+		Automata automata2 = new Automata(0, 3, 3);
+		automata2.addTrans(0, 1, 1);
+		automata2.addTrans(0, 2, 1);
+		automata2.addTrans(1, 1, 2);
+		automata2.addTrans(1, 2, 2);
+		
+		accepting = new HashSet<Integer>();
+		accepting.add(2);
+		automata2.setAcceptingStates(accepting);
+		
+		List<Integer> counterExample = LanguageChecking.isSubSet(automata1, automata2);
+		
+		Assert.assertNotNull(counterExample);
+		Assert.assertTrue(LanguageChecking.acceptsWord(automata1, counterExample));
+		Assert.assertFalse(LanguageChecking.acceptsWord(automata2, counterExample));
 	}
 }

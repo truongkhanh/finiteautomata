@@ -13,31 +13,8 @@ import java.util.Stack;
  *
  */
 public class Automata {
-	public State[] getStates() {
-		return states;
-	}
-
-
-	public int getNumLabels() {
-		return numLabels;
-	}
-
-
-	public Set<Integer> getAcceptingStates() {
-		return acceptingStates;
-	}
-
+	public static int EPSILON_LABEL = 0;
 	
-	
-	public int getInitState() {
-		return initState;
-	}
-
-
-	public void setInitState(int initState) {
-		this.initState = initState;
-	}
-
 	/**
 	 * Init state index
 	 */
@@ -58,6 +35,12 @@ public class Automata {
 	 */
 	private Set<Integer> acceptingStates;
 	
+	/**
+	 * 
+	 * @param initState
+	 * @param numStates
+	 * @param numLabels Exclude 0 for Epsilon (empty) label
+	 */
 	public Automata(int initState, int numStates, int numLabels){
 		this.initState = initState;
 		this.states = new State[numStates];
@@ -66,6 +49,7 @@ public class Automata {
 		}
 		
 		this.numLabels = numLabels;
+		this.acceptingStates = new HashSet<Integer>();
 	}
 	
 	public Automata(int initState, State[] states, int numLabels){
@@ -135,7 +119,7 @@ public class Automata {
 			result.add(currentState);
 			
 			//add new states to workingState
-			for(int child: states[currentState].getDest(0)){
+			for(int child: states[currentState].getDest(EPSILON_LABEL)){
 				if(!isVisited[child]){
 					workingStates.push(child);
 					
@@ -144,5 +128,45 @@ public class Automata {
 		}
 		
 		return result;
+	}
+	
+    public String toString() {
+        String NEWLINE = System.getProperty("line.separator");
+        StringBuilder s = new StringBuilder();
+        s.append(states.length + " " + acceptingStates + NEWLINE);
+        for(State v: states){
+        	Set<Integer> labels = v.getOutgoingLabels();
+        	for(int label: labels){
+        		s.append(v.getId() + "(" + label + ")" + v.getDest(label));
+        		s.append(NEWLINE);
+        	}
+        }
+       
+        return s.toString();
+    }
+    
+    public State[] getStates() {
+		return states;
+	}
+
+
+	public int getNumLabels() {
+		return numLabels;
+	}
+
+
+	public Set<Integer> getAcceptingStates() {
+		return acceptingStates;
+	}
+
+	
+	
+	public int getInitState() {
+		return initState;
+	}
+
+
+	public void setInitState(int initState) {
+		this.initState = initState;
 	}
 }
