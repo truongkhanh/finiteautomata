@@ -6,6 +6,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
+import finiteautomata.language.LanguageChecking;
+
 public class NFA2DFATest {
 
 	@Test

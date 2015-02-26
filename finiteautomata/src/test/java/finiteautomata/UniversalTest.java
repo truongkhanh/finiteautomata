@@ -6,6 +6,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import finiteautomata.language.LanguageChecking;
+
 public class UniversalTest {
 	@Test
 	public void test1(){
