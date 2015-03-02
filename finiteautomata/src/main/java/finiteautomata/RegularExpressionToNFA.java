@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 public class RegularExpressionToNFA {
+	/**
+	 * First line is for number of labels
+	 * Each term is separated by a single space
+	 * each term is an INT, INT*, INT^INT
+	 */
 	public Automata getAutomataFromRegularExpression(String expression){
 		String[] lines = expression.split("\n");
 		
