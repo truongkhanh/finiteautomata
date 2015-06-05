@@ -15,30 +15,17 @@ import java.util.Stack;
 public class Automata {
 	public static int EPSILON_LABEL = 0;
 	
-	/**
-	 * Init state index
-	 */
 	private int initState;
-	
-	/**
-	 * State with outgoing transition
-	 */
 	private State[] states;
 	
 	/**
-	 * Number of labels in this automata. 0 for lambda (empty) label
+	 * Number of labels in this automata. include 0 for lambda (empty) label
 	 */
 	private int numLabels;
 	
-	/**
-	 * Set of accepting states
-	 */
 	private Set<Integer> acceptingStates;
 	
 	/**
-	 * 
-	 * @param initState
-	 * @param numStates
 	 * @param numLabels Exclude 0 for Epsilon (empty) label
 	 */
 	public Automata(int initState, int numStates, int numLabels){
@@ -69,9 +56,6 @@ public class Automata {
 	
 	/**
 	 * Add transitions from source to dest with label
-	 * @param source
-	 * @param label
-	 * @param dest
 	 */
 	public void addTrans(int source, int label, int dest){
 		this.states[source].addTrans(label, dest);
@@ -79,7 +63,6 @@ public class Automata {
 
 	/**
 	 * Set accepting states
-	 * @param acceptingStates
 	 */
 	public void setAcceptingStates(Collection<Integer> acceptingStates){
 		this.acceptingStates = new HashSet<Integer>(acceptingStates);
@@ -87,9 +70,6 @@ public class Automata {
 	
 	/**
 	 * Get set of destinations from sources by transitions with label
-	 * @param sources
-	 * @param label
-	 * @return
 	 */
 	public Set<Integer> getDests(Set<Integer> sources, int label){
 		Set<Integer> result = new HashSet<Integer>();
@@ -102,8 +82,6 @@ public class Automata {
 	
 	/**
 	 * Compute epsilon closure from a set of states
-	 * @param fromStates
-	 * @return
 	 */
 	public Set<Integer> getEpsilonClosure(Set<Integer> fromStates){
 		Set<Integer> result = new HashSet<Integer>();
@@ -158,15 +136,8 @@ public class Automata {
 	public Set<Integer> getAcceptingStates() {
 		return acceptingStates;
 	}
-
-	
 	
 	public int getInitState() {
 		return initState;
-	}
-
-
-	public void setInitState(int initState) {
-		this.initState = initState;
 	}
 }

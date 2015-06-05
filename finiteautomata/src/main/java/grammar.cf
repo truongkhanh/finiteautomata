@@ -1,0 +1,41 @@
+--Model
+Model. ModelRule ::= [AutomataRule] [StatementRule];
+
+--Automata
+Automata. AutomataRule ::= "automata" Ident "{" AutomataInitRule [AutomataTransitionRule] AutomataAcceptingsRule "}" ;
+
+--Automata
+AutomataInitialState. AutomataInitRule ::= "init" ":" Name ";";
+AutomataTransition. AutomataTransitionRule ::= Name "," Name "->" Name;
+AutomataEmptyTransition. AutomataTransitionRule ::= Name "->" Name;
+AutomataAcceptings. AutomataAcceptingsRule ::= "accepting" ":" [Name] ";";
+
+CheckingStatement. StatementRule ::= CheckingStatementRule;
+ActionStatement. StatementRule ::= ExportStatementRule;
+
+--Check
+EmptyChecking. CheckingStatementRule ::= "check" Ident "empty" ";";
+UniversalChecking. CheckingStatementRule ::= "check" Ident "universal" ";";
+SubsetChecking. CheckingStatementRule ::= "check" Ident "subset" Ident ";";
+
+--export
+ExportDotStatement. ExportStatementRule ::= "exportDot" AutomataExpressionRule ";";
+ExportTextStatement. ExportStatementRule ::= "exportText" AutomataExpressionRule ";";
+DFAAutomata. AutomataExpressionRule ::= "dfa" Ident;
+NameAutomata. AutomataExpressionRule ::= Ident;
+
+
+
+--name can be integer numbers or id
+NumberName. Name ::= Integer;
+LiteralName. Name ::= Ident;
+
+--separator for a list
+separator 	AutomataRule "";
+separator 	AutomataTransitionRule ";";
+separator 	StatementRule "";
+separator 	Name ",";
+
+comment "/**" "**/" ;
+comment "/*" "*/" ;
+comment "//";

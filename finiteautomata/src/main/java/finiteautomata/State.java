@@ -8,6 +8,9 @@ import java.util.Set;
 public class State {
 	private int id;
 	
+	/*
+	 * Map label to target states
+	 */
 	private Map<Integer, Set<Integer>> outgoingTrans;
 	
 	public State(int id){
@@ -23,10 +26,6 @@ public class State {
 		}
 		
 		destSet.add(dest);
-	}
-	
-	public boolean hasDest(int label){
-		return outgoingTrans.containsKey(label);
 	}
 	
 	public Set<Integer> getDest(int label){
