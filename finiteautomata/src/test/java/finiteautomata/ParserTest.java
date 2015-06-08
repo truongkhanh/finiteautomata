@@ -1,18 +1,11 @@
 package finiteautomata;
 
-import grammar.Yylex;
-import grammar.parser;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.Reader;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import visitor.AllVisitorImpl;
 import visitor.Assertion;
 import visitor.Specification;
 
