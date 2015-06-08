@@ -1,0 +1,83 @@
+package finiteautomata;
+
+import java.util.Set;
+
+import visitor.LabelAutomata;
+
+public class DotGraphiczUltility {
+	public static String write(LabelAutomata labelAutomata){
+		Automata automata = labelAutomata.getAutomata();
+		
+		final String NEW_LINE = "\n";
+		final String SPACE = " ";
+		StringBuilder result = new StringBuilder();
+		
+		result.append("digraph finite_state_machine {");
+		result.append(NEW_LINE);
+		result.append("rankdir=LR;");
+		result.append(NEW_LINE);
+		result.append("size=\"8,5\"");
+		result.append(NEW_LINE);
+		result.append("node [shape = doublecircle]; ");
+		
+		for(int accepting: automata.getAcceptingStates()){
+			result.append(labelAutomata.getState(accepting));
+			result.append(SPACE);
+		}
+		result.append(";");
+		result.append(NEW_LINE);
+		result.append("node [shape = circle];");
+		result.append(NEW_LINE);
+		
+		for(State state: automata.getStates()){
+			for(int i = 0; i < automata.getNumLabels(); i++){
+				Set<Integer> nexts = state.getDest(i);
+				for(Integer next: nexts){
+					result.append(labelAutomata.getState(state.getId()) + " -> " + labelAutomata.getState(next) + " [ label = \"" + labelAutomata.getLabel(i) + "\" ];");
+					result.append(NEW_LINE);
+				}
+			}
+		}
+		
+		result.append("}");
+		
+		return result.toString();
+	}
+	
+	public static String write(Automata automata){
+		final String NEW_LINE = "\n";
+		final String SPACE = " ";
+		StringBuilder result = new StringBuilder();
+		
+		result.append("digraph finite_state_machine {");
+		result.append(NEW_LINE);
+		result.append("rankdir=LR;");
+		result.append(NEW_LINE);
+		result.append("size=\"8,5\"");
+		result.append(NEW_LINE);
+		result.append("node [shape = doublecircle]; ");
+		
+		for(int accepting: automata.getAcceptingStates()){
+			result.append(accepting);
+			result.append(SPACE);
+		}
+		result.append(";");
+		result.append(NEW_LINE);
+		result.append("node [shape = circle];");
+		result.append(NEW_LINE);
+		
+		for(State state: automata.getStates()){
+			for(int i = 0; i < automata.getNumLabels(); i++){
+				Set<Integer> nexts = state.getDest(i);
+				for(Integer next: nexts){
+					result.append(state.getId() + " -> " + next + " [ label = \"" + i + "\" ];");
+					result.append(NEW_LINE);
+				}
+			}
+		}
+		
+		result.append("}");
+		
+		return result.toString();
+	}
+}

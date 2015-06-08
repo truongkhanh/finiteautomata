@@ -28,14 +28,21 @@ public class LabelAutomata {
 		return name;
 	}
 	
+	public String getState(int index){
+		return getKeyByValue(index, this.mapStateToIndex);
+	}
 	public String getLabel(int index){
+		return getKeyByValue(index, this.mapLabelToIndex);
+	}
+
+	private String getKeyByValue(int index, Map<String, Integer> mapLabelToIndex) {
 		for(String label: mapLabelToIndex.keySet()){
 			if(mapLabelToIndex.get(label) == index){
 				return label;
 			}
 		}
 		
-		throw new RuntimeException("No label has index " + index);
+		throw new RuntimeException("No label/state has index " + index);
 	}
 	
 	public List<String> getLabels(List<Integer> word){
