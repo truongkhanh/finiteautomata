@@ -1,23 +1,32 @@
 package visitor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import finiteautomata.Automata;
 
 public class Specification {
 
-	private Map<String, Automata> mapIdToAutomata = new HashMap<String, Automata>();
+	private Map<String, LabelAutomata> mapIdToAutomata = new HashMap<String, LabelAutomata>();
+	private List<Assertion> assertions = new ArrayList<Assertion>();
 	
-	public void add(String name, Automata automata){
+	public void addAssertion(Assertion assertion){
+		this.assertions.add(assertion);
+	}
+	
+	public void addLabelAutomata(String name, LabelAutomata automata){
 		if(mapIdToAutomata.containsKey(name)){
-			throw new RuntimeException("Automata name" + name + " already exists!");
+			throw new RuntimeException("Automata name " + name + " already exists!");
 		}
 		
 		mapIdToAutomata.put(name, automata);
 	}
 	
-	public Automata getAutomata(String name){
+	public LabelAutomata getLabelAutomata(String name){
 		return mapIdToAutomata.get(name);
+	}
+
+	public List<Assertion> getAssertions() {
+		return assertions;
 	}
 }

@@ -7,11 +7,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import visitor.AllVisitorImpl;
+import visitor.Assertion;
 import visitor.Specification;
 
 public class ParserTest {
@@ -23,7 +25,7 @@ public class ParserTest {
 		Reader reader = getReader(fileName);
 		Specification specification = parseFromReader(reader);
 		
-		Automata automata = specification.getAutomata("A");
+		Automata automata = specification.getLabelAutomata("A").getAutomata();
 		Assert.assertNotNull(automata);
 		
 		int numberOfStates = automata.getStates().length;
@@ -39,7 +41,7 @@ public class ParserTest {
 		Reader reader = getReader(fileName);
 		Specification specification = parseFromReader(reader);
 		
-		Automata automata = specification.getAutomata("A");
+		Automata automata = specification.getLabelAutomata("A").getAutomata();
 		Assert.assertNotNull(automata);
 		
 		int numberOfStates = automata.getStates().length;
@@ -48,7 +50,7 @@ public class ParserTest {
 		int numberOfAccepting = automata.getAcceptingStates().size();
 		Assert.assertEquals(2, numberOfAccepting);
 		
-		automata = specification.getAutomata("B");
+		automata = specification.getLabelAutomata("B").getAutomata();
 		Assert.assertNotNull(automata);
 		
 		numberOfStates = automata.getStates().length;
@@ -61,6 +63,23 @@ public class ParserTest {
 	@Test(expected=RuntimeException.class)
 	public void whenDuplicateAutomataName(){
 		String fileName = "DuplicateAutomataName.txt";
+		Reader reader = getReader(fileName);
+		parseFromReader(reader);
+	}
+	
+	@Test
+	public void whenThereAreAllTypesAssertions(){
+		String fileName = "AllAssertions.txt";
+		Reader reader = getReader(fileName);
+		Specification specification = parseFromReader(reader);
+		List<Assertion> assertions = specification.getAssertions();
+		
+		Assert.assertEquals(3, assertions.size());
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void whenAutomataUndefinedInAssertions(){
+		String fileName = "UndefinedAutomata.txt";
 		Reader reader = getReader(fileName);
 		parseFromReader(reader);
 	}

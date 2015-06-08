@@ -20,6 +20,7 @@ import grammar.Absyn.Model;
 import grammar.Absyn.Name;
 import grammar.Absyn.NameAutomata;
 import grammar.Absyn.NumberName;
+import grammar.Absyn.StatementRule;
 import grammar.Absyn.SubsetChecking;
 import grammar.Absyn.UniversalChecking;
 
@@ -43,11 +44,17 @@ public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 		for(AutomataRule automata: p.listautomatarule_){
 			automata.accept(this, arg);
 		}
+		
+		for(StatementRule statement: p.liststatementrule_){
+			statement.accept(this, arg);
+		}
+		
 		return null;
 	}
 
 	public Object visit(Automata p, Specification arg) {
-		mapStateToIndex.clear();
+		mapStateToIndex = new HashMap<String, Integer>();
+		
 		edges = new ArrayList<Edge>();
 		acceptingStates = new HashSet<Integer>();
 		
@@ -63,13 +70,15 @@ public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 		
 		int numberOfStates = countNumberOfStates();
 		
-		finiteautomata.Automata newAutomata = new finiteautomata.Automata(initState, numberOfStates, mapLabelToIndex.size());
-		newAutomata.setAcceptingStates(acceptingStates);
+		finiteautomata.Automata automata = new finiteautomata.Automata(initState, numberOfStates, mapLabelToIndex.size());
+		automata.setAcceptingStates(acceptingStates);
 		for(Edge edge: edges){
-			newAutomata.addTrans(edge.source, edge.label, edge.dest);
+			automata.addTrans(edge.source, edge.label, edge.dest);
 		}
 		
-		arg.add(name, newAutomata);
+		LabelAutomata labelAutomata = new LabelAutomata(name, automata, mapStateToIndex, mapLabelToIndex);
+		arg.addLabelAutomata(name, labelAutomata);
+		
 		return null;
 	}
 
@@ -109,27 +118,32 @@ public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 	}
 
 	public Object visit(CheckingStatement p, Specification arg) {
-		// TODO Auto-generated method stub
+		p.checkingstatementrule_.accept(this, arg);
 		return null;
 	}
 
 	public Object visit(ActionStatement p, Specification arg) {
-		// TODO Auto-generated method stub
+		p.exportstatementrule_.accept(this, arg);
 		return null;
 	}
 
 	public Object visit(EmptyChecking p, Specification arg) {
-		// TODO Auto-generated method stub
+		validateAutomataName(p.ident_, arg);
+		arg.addAssertion(new EmptyAssertion(arg.getLabelAutomata(p.ident_)));
 		return null;
 	}
 
 	public Object visit(UniversalChecking p, Specification arg) {
-		// TODO Auto-generated method stub
+		validateAutomataName(p.ident_, arg);
+		arg.addAssertion(new UniversalAssertion(arg.getLabelAutomata(p.ident_)));
 		return null;
 	}
 
 	public Object visit(SubsetChecking p, Specification arg) {
-		// TODO Auto-generated method stub
+		validateAutomataName(p.ident_1, arg);
+		validateAutomataName(p.ident_2, arg);
+		
+		arg.addAssertion(new SubsetAssertion(arg.getLabelAutomata(p.ident_1), arg.getLabelAutomata(p.ident_2)));
 		return null;
 	}
 
@@ -209,6 +223,13 @@ public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 		
 		int numberOfStates = states.size();
 		return numberOfStates;
+	}
+	
+	private void validateAutomataName(String name, Specification specification){
+		LabelAutomata automata = specification.getLabelAutomata(name);
+		if(automata == null){
+			throw new RuntimeException("Automata name " + name + " does not exists!");
+		}
 	}
 	
 	private class Edge{
