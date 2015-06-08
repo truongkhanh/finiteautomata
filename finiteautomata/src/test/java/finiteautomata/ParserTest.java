@@ -16,7 +16,7 @@ import visitor.AllVisitorImpl;
 import visitor.Assertion;
 import visitor.Specification;
 
-public class ParserTest {
+public class ParserTest extends AbstractTest{
 
 	
 	@Test
@@ -82,37 +82,5 @@ public class ParserTest {
 		String fileName = "UndefinedAutomata.txt";
 		Reader reader = getReader(fileName);
 		parseFromReader(reader);
-	}
-	
-	private Reader getReader(String fileName) {
-		try {
-			ClassLoader classLoader = getClass().getClassLoader();
-			File file = new File(classLoader.getResource(fileName).getFile());
-			FileReader reader = new FileReader(file);
-			return reader;
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private Specification parseFromReader(Reader reader) {
-		parser p;
-		Yylex l = new Yylex(reader);
-		p = new parser(l);
-
-		try {
-			grammar.Absyn.ModelRule parse_tree = p.pModelRule();
-
-			Specification problem = new Specification();
-			parse_tree.accept(new AllVisitorImpl(), problem);
-
-			return problem;
-		} catch (Throwable e) {
-
-			String error = ("At line " + String.valueOf(l.line_num())
-					+ ", near \"" + l.buff() + "\" :\n")
-					+ ("     " + e.getMessage());
-			throw new RuntimeException(error);
-		}
 	}
 }

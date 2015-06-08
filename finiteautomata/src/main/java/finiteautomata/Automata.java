@@ -108,6 +108,24 @@ public class Automata {
 		return result;
 	}
 	
+	public boolean isDFA(){
+		for(State state: states){
+			Set<Integer> nexts = state.getDest(0);
+			if(!nexts.isEmpty()){
+				return false;
+			}
+			
+			for(int i = 1; i < numLabels; i++){
+				nexts = state.getDest(i);
+				if(nexts.size() > 1){
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
     public String toString() {
         String NEWLINE = System.getProperty("line.separator");
         StringBuilder s = new StringBuilder();

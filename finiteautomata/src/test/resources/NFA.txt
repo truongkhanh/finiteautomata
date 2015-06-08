@@ -1,0 +1,10 @@
+automata A{
+init : a1;
+a, a1 -> a2;
+a, a1 -> a5;
+a2 -> a3;
+b, a3 -> a4;
+c, a5 -> a6;
+
+accepting: a4, a6;
+}
