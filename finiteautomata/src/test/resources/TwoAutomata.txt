@@ -1,0 +1,15 @@
+automata A{
+init : a0;
+e0, a0 -> a1;
+e1, a1 -> a2;
+a2 -> a3;
+accepting: a3, a2;
+}
+
+automata B{
+init : a0;
+a0 -> a1;
+e1, a1 -> a2;
+a2 -> a3;
+accepting: a3;
+}

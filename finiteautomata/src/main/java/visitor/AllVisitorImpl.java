@@ -6,7 +6,9 @@ import grammar.Absyn.Automata;
 import grammar.Absyn.AutomataAcceptings;
 import grammar.Absyn.AutomataEmptyTransition;
 import grammar.Absyn.AutomataInitialState;
+import grammar.Absyn.AutomataRule;
 import grammar.Absyn.AutomataTransition;
+import grammar.Absyn.AutomataTransitionRule;
 import grammar.Absyn.CheckingStatement;
 import grammar.Absyn.DFAAutomata;
 import grammar.Absyn.EmptyChecking;
@@ -30,21 +32,22 @@ import java.util.Set;
 
 public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 
-	private Map<String, Integer> mapStateToIndex;
-	private Map<String, Integer> mapLabelToIndex;
+	private Map<String, Integer> mapStateToIndex = new HashMap<String, Integer>();
+	private Map<String, Integer> mapLabelToIndex = new HashMap<String, Integer>();
 	
 	private int initState;
 	private List<Edge> edges;
 	private Set<Integer> acceptingStates;
 	
 	public Object visit(Model p, Specification arg) {
-		// TODO Auto-generated method stub
+		for(AutomataRule automata: p.listautomatarule_){
+			automata.accept(this, arg);
+		}
 		return null;
 	}
 
 	public Object visit(Automata p, Specification arg) {
-		mapStateToIndex = new HashMap<String, Integer>();
-		mapLabelToIndex = new HashMap<String, Integer>();
+		mapStateToIndex.clear();
 		edges = new ArrayList<Edge>();
 		acceptingStates = new HashSet<Integer>();
 		
@@ -52,7 +55,21 @@ public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 		
 		String name = p.ident_;
 		
-		// TODO Auto-generated method stub
+		p.automatainitrule_.accept(this, arg);
+		for(AutomataTransitionRule transition: p.listautomatatransitionrule_){
+			transition.accept(this, arg);
+		}
+		p.automataacceptingsrule_.accept(this, arg);
+		
+		int numberOfStates = countNumberOfStates();
+		
+		finiteautomata.Automata newAutomata = new finiteautomata.Automata(initState, numberOfStates, mapLabelToIndex.size());
+		newAutomata.setAcceptingStates(acceptingStates);
+		for(Edge edge: edges){
+			newAutomata.addTrans(edge.source, edge.label, edge.dest);
+		}
+		
+		arg.add(name, newAutomata);
 		return null;
 	}
 
@@ -181,6 +198,17 @@ public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 		}
 		
 		return result;
+	}
+	
+	private int countNumberOfStates() {
+		Set<Integer> states = new HashSet<Integer>();
+		for(Edge edge: edges){
+			states.add(edge.source);
+			states.add(edge.dest);
+		}
+		
+		int numberOfStates = states.size();
+		return numberOfStates;
 	}
 	
 	private class Edge{

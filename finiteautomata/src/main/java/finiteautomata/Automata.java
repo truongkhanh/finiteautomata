@@ -19,14 +19,14 @@ public class Automata {
 	private State[] states;
 	
 	/**
-	 * Number of labels in this automata. include 0 for lambda (empty) label
+	 * Number of labels in this automata. include 0 for epsilon (empty) label
 	 */
 	private int numLabels;
 	
 	private Set<Integer> acceptingStates;
 	
 	/**
-	 * @param numLabels Exclude 0 for Epsilon (empty) label
+	 * @param numLabels include 0 for epsilon (empty) label
 	 */
 	public Automata(int initState, int numStates, int numLabels){
 		this.initState = initState;
