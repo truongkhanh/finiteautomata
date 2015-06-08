@@ -1,5 +1,6 @@
 package finiteautomata;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,12 +8,13 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
+import finiteautomata.language.EmptyChecking;
 import finiteautomata.language.LanguageChecking;
 
 public class EmptinessTest {
 
 	@Test
-	public void test1(){
+	public void whenLangueIsNotEmpty(){
 		Automata automata = new Automata(1, 2, 3);
 		automata.addTrans(1, 1, 0);
 		automata.addTrans(0, 2, 0);
@@ -22,164 +24,54 @@ public class EmptinessTest {
 		
 		automata.setAcceptingStates(acceptingStates);
 		
-		Assert.assertFalse(LanguageChecking.isEmpty(automata));
+		Assert.assertFalse(EmptyChecking.isEmpty(automata));
 		
-		List<Integer> word = LanguageChecking.getAcceptedWord(automata);
-		Assert.assertEquals(1, word.get(0).intValue());
-		for(int i = 1; i < word.size(); i++){
-			Assert.assertEquals(2, word.get(i).intValue());
-		}
-		
-		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{1}));
-		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{1, 2}));
-		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{1, 2, 2, 2, 2}));
-		
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 2, 1, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 1, 2, 2}));
-		
-		
-		
-		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
-		Assert.assertTrue(notAcceptedWord != null);
-		
-		int[] wordTemp = new int[notAcceptedWord.size()];
-		for(int i = 0; i < wordTemp.length; i++){
-			wordTemp[i] = notAcceptedWord.get(i);
-		}
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
+		List<Integer> word = EmptyChecking.getShortestAcceptedWord(automata);
+		Assert.assertEquals(Arrays.asList(1), word);
 	}
 	
 	@Test
-	public void test2(){
-		//corresponding dfa
-//		0 5 3
-//		10
-//		0 1 1
-//		0 2 2
-//		1 1 1
-//		1 2 3
-//		2 1 1
-//		2 2 2
-//		3 1 1
-//		3 2 4
-//		4 1 1
-//		4 2 2
-//		1
-//		4 
+	public void whenLangueIsEmpty(){
+		Automata automata = new Automata(1, 2, 3);
+		automata.addTrans(1, 1, 0);
+		automata.addTrans(0, 2, 0);
 		
-		Automata automata = new Automata(0, 11, 3);
-		automata.addTrans(0, 0, 1);
-		automata.addTrans(0, 0, 7);
-		
-		automata.addTrans(1, 0, 2);
-		automata.addTrans(1, 0, 4);
-		
-		automata.addTrans(2, 1, 3);
-		
-		automata.addTrans(3, 0, 6);
-		
-		automata.addTrans(4, 2, 5);
-		
-		automata.addTrans(5, 0, 6);
-		
-		automata.addTrans(6, 0, 7);
-		automata.addTrans(6, 0, 1);
-		
-		automata.addTrans(7, 1, 8);
-		
-		automata.addTrans(8, 2, 9);
-		
-		automata.addTrans(9, 2, 10);
-		
-		Set<Integer> acceptingStates = new HashSet<Integer>();
-		acceptingStates.add(10);
-		
-		automata.setAcceptingStates(acceptingStates);
-		
-		Assert.assertFalse(LanguageChecking.isEmpty(automata));
-		
-		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2, 2}));
-		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
-		Assert.assertTrue(LanguageChecking.acceptsWord(automata, new int[]{2, 1, 2, 1, 1, 2, 2}));
-		
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 2, 2, 2, 2, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
-		
-		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
-		Assert.assertTrue(notAcceptedWord != null);
-		
-		int[] wordTemp = new int[notAcceptedWord.size()];
-		for(int i = 0; i < wordTemp.length; i++){
-			wordTemp[i] = notAcceptedWord.get(i);
-		}
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
+		Assert.assertTrue(EmptyChecking.isEmpty(automata));
+
 	}
 	
 	@Test
-	public void test3(){
-		//corresponding dfa
-//		0 5 3
-//		10
-//		0 1 1
-//		0 2 2
-//		1 1 1
-//		1 2 3
-//		2 1 1
-//		2 2 2
-//		3 1 1
-//		3 2 4
-//		4 1 1
-//		4 2 2
-//		1
-//		4 
-		
-		Automata automata = new Automata(0, 11, 3);
-		automata.addTrans(0, 0, 1);
-		automata.addTrans(0, 0, 7);
-		
-		automata.addTrans(1, 0, 2);
-		automata.addTrans(1, 0, 4);
-		
-		automata.addTrans(2, 1, 3);
-		
-		automata.addTrans(3, 0, 6);
-		
-		automata.addTrans(4, 2, 5);
-		
-		automata.addTrans(5, 0, 6);
-		
-		automata.addTrans(6, 0, 7);
-		automata.addTrans(6, 0, 1);
-		
-		automata.addTrans(7, 1, 8);
-		
-		automata.addTrans(8, 2, 9);
-		
-		automata.addTrans(9, 2, 10);
+	public void whenLanguageIsOnlyOneWord(){
+		Automata automata = new Automata(1, 2, 3);
+		automata.addTrans(1, 1, 0);
+		automata.addTrans(0, 2, 0);
 		
 		Set<Integer> acceptingStates = new HashSet<Integer>();
+		acceptingStates.add(1);
 		
 		automata.setAcceptingStates(acceptingStates);
 		
-		Assert.assertTrue(LanguageChecking.isEmpty(automata));
+		Assert.assertFalse(EmptyChecking.isEmpty(automata));
 		
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 2, 1, 2, 2, 1, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 1, 2, 1, 1, 2, 2}));
+		List<Integer> word = EmptyChecking.getShortestAcceptedWord(automata);
+		Assert.assertTrue(word.isEmpty());
+	}
+	
+	@Test
+	public void whenShortestPathIsLength2(){
+		Automata automata = new Automata(0, 4, 4);
+		automata.addTrans(0, 1, 1);
+		automata.addTrans(0, 2, 2);
+		automata.addTrans(2, 3, 3);
 		
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{2, 2, 2, 2, 2, 2, 2}));
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, new int[]{1, 1, 1, 1, 1, 2}));
+		Set<Integer> acceptingStates = new HashSet<Integer>();
+		acceptingStates.add(3);
 		
-		//universal checking
-		List<Integer> notAcceptedWord = LanguageChecking.findUnacceptingWord(automata);
-		Assert.assertTrue(notAcceptedWord != null);
+		automata.setAcceptingStates(acceptingStates);
 		
-		int[] wordTemp = new int[notAcceptedWord.size()];
-		for(int i = 0; i < wordTemp.length; i++){
-			wordTemp[i] = notAcceptedWord.get(i);
-		}
-		Assert.assertFalse(LanguageChecking.acceptsWord(automata, wordTemp));
+		Assert.assertFalse(EmptyChecking.isEmpty(automata));
+		
+		List<Integer> word = EmptyChecking.getShortestAcceptedWord(automata);
+		Assert.assertEquals(Arrays.asList(2, 3), word);
 	}
 }

@@ -2,7 +2,7 @@ package visitor;
 
 import java.util.List;
 
-import finiteautomata.language.LanguageChecking;
+import finiteautomata.language.EmptyChecking;
 
 public class EmptyAssertion extends Assertion{
 
@@ -13,7 +13,7 @@ public class EmptyAssertion extends Assertion{
 	}
 	
 	public boolean verify(){
-		result = LanguageChecking.isEmpty(labelAutomata.getAutomata());
+		result = EmptyChecking.isEmpty(labelAutomata.getAutomata());
 		
 		return result;
 	}
@@ -25,7 +25,7 @@ public class EmptyAssertion extends Assertion{
 		StringBuilder result = new StringBuilder();
 		result.append("Automata " + labelAutomata.getName() + " accepts ");
 		
-		List<Integer> word = LanguageChecking.getAcceptedWord(labelAutomata.getAutomata());
+		List<Integer> word = EmptyChecking.getShortestAcceptedWord(labelAutomata.getAutomata());
 		List<String> labels = labelAutomata.getLabels(word);
 		
 		result.append(getLabelWord(labels));
