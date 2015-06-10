@@ -55,6 +55,10 @@ public class UniversalChecking {
 		return true;
 	}
 	
+	/**
+	 * Return shortest word not accepted by this dfa
+	 * Return null if not exists
+	 */
 	public static List<Integer> findShortestUnacceptingWords(Automata dfa) {
 		Set<Integer> acceptingStates = dfa.getAcceptingStates();
 		
@@ -111,7 +115,11 @@ public class UniversalChecking {
         return null;
 	}
 	
-	public static List<Integer> findUnacceptingWordInDFA(Automata dfa){
+	/**
+	 * Return word not accepted by this dfa
+	 * Return null if not exists
+	 */
+	public static List<Integer> findUnacceptingWord(Automata dfa){
 		Set<Integer> acceptingStates = dfa.getAcceptingStates();
 		
 		//check init is accepted

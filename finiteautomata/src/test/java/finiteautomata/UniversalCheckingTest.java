@@ -33,7 +33,7 @@ public class UniversalCheckingTest {
 		List<Integer> word = UniversalChecking.findShortestUnacceptingWords(automata);
 		Assert.assertNull(word);
 		
-		word = UniversalChecking.findUnacceptingWordInDFA(automata);
+		word = UniversalChecking.findUnacceptingWord(automata);
 		Assert.assertNull(word);
 	}
 	
@@ -59,7 +59,7 @@ public class UniversalCheckingTest {
 		Assert.assertEquals(2, word.size());
 		Assert.assertTrue(word.get(1) == 2);
 		
-		word = UniversalChecking.findUnacceptingWordInDFA(automata);
+		word = UniversalChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(word.size() >= 2);
 	}
 	
@@ -84,7 +84,37 @@ public class UniversalCheckingTest {
 		List<Integer> word = UniversalChecking.findShortestUnacceptingWords(automata);
 		Assert.assertEquals(0, word.size());
 		
-		word = UniversalChecking.findUnacceptingWordInDFA(automata);
+		word = UniversalChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(word.size() >= 0);
+	}
+	
+	@Test
+	public void whenFirstUnAcceptingIsNotShortest(){
+		Automata automata = new Automata(0, 4, 3);
+		automata.addTrans(0, 2, 1);
+		automata.addTrans(0, 1, 3);
+		automata.addTrans(1, 1, 2);
+		automata.addTrans(1, 2, 2);
+		
+		Set<Integer> acceptingStates = new HashSet<Integer>();
+		acceptingStates.add(0);
+		acceptingStates.add(1);
+		acceptingStates.add(2);
+		acceptingStates.add(3);
+		
+		automata.setAcceptingStates(acceptingStates);
+		
+		if(!automata.isDFA()){
+			automata = AutomataConverter.toDFA(automata);
+		}
+		Assert.assertFalse(UniversalChecking.isUniversal(automata));
+		
+		List<Integer> word = UniversalChecking.findShortestUnacceptingWords(automata);
+		Assert.assertEquals(2, word.size());
+		Assert.assertTrue(word.get(0) == 1);
+		
+		word = UniversalChecking.findUnacceptingWord(automata);
+		Assert.assertTrue(word.size() > 2);
+		Assert.assertTrue(word.get(0) == 2);
 	}
 }
