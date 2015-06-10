@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import finiteautomata.language.EmptyChecking;
 
-public class EmptinessTest {
+public class EmptinessCheckingTest {
 
 	@Test
 	public void whenLangueIsNotEmpty(){

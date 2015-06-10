@@ -7,19 +7,19 @@ import finiteautomata.language.EmptyChecking;
 public class EmptyAssertion extends Assertion{
 
 	private LabelAutomata labelAutomata;
-	private boolean result;
+	private boolean isEmpty;
 	public EmptyAssertion(LabelAutomata labelAutomata){
 		this.labelAutomata = labelAutomata;
 	}
 	
 	public boolean verify(){
-		result = EmptyChecking.isEmpty(labelAutomata.getAutomata());
+		isEmpty = EmptyChecking.isEmpty(labelAutomata.getAutomata());
 		
-		return result;
+		return isEmpty;
 	}
 	
 	public String getResult() {
-		if(result){
+		if(isEmpty){
 			return "Automata " + labelAutomata.getName() + " is empty.";
 		}
 		StringBuilder result = new StringBuilder();

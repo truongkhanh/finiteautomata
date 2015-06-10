@@ -65,7 +65,6 @@ public class InclusionTest {
 		
 		automata1.setAcceptingStates(acceptingStates);
 		
-		Assert.assertEquals(null, LanguageChecking.findUnacceptingWord(automata1));
 		
 		Automata automata2 = new Automata(1, 2, 3);
 		automata2.addTrans(1, 1, 0);

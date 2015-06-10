@@ -2,26 +2,35 @@ package visitor;
 
 import java.util.List;
 
-import finiteautomata.language.LanguageChecking;
+import finiteautomata.Automata;
+import finiteautomata.AutomataConverter;
+import finiteautomata.language.UniversalChecking;
 
 public class UniversalAssertion extends Assertion{
 
 	private LabelAutomata labelAutomata;
-	private List<Integer> notAcceptedWord;
+	private Automata dfa;
+	private boolean isUniversal;
 	public UniversalAssertion(LabelAutomata labelAutomata){
 		this.labelAutomata = labelAutomata;
+		
+		dfa = this.labelAutomata.getAutomata();
+		if(!dfa.isDFA()){
+			dfa = AutomataConverter.toDFA(dfa);
+		}
 	}
 	
 	public boolean verify() {
-		notAcceptedWord = LanguageChecking.findUnacceptingWord(labelAutomata.getAutomata());
-		
-		return notAcceptedWord == null;
+		isUniversal =  UniversalChecking.isUniversal(dfa);
+		return isUniversal;
 	}
 
 	public String getResult() {
-		if(notAcceptedWord == null){
+		if(isUniversal){
 			return "Automata " + labelAutomata.getName() + " is universal.";
 		}
+		List<Integer> notAcceptedWord = UniversalChecking.findShortestUnacceptingWords(dfa);
+		
 		StringBuilder result = new StringBuilder();
 		result.append("Automata " + labelAutomata.getName() + " does not accept ");
 		
