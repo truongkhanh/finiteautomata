@@ -21,10 +21,10 @@ public class EmptinessCheckingTest {
 		
 		Assert.assertFalse(EmptyChecking.isEmpty(automata));
 		
-		List<Integer> word = EmptyChecking.getShortestAcceptedWord(automata);
+		List<Integer> word = EmptyChecking.findShortestAcceptedWord(automata);
 		Assert.assertEquals(Arrays.asList(1), word);
 		
-		word = EmptyChecking.getAcceptedWord(automata);
+		word = EmptyChecking.findAcceptedWord(automata);
 		Assert.assertTrue(word.size() >= 1);
 		Assert.assertTrue(word.get(0) == 1);
 	}
@@ -37,10 +37,10 @@ public class EmptinessCheckingTest {
 		
 		Assert.assertTrue(EmptyChecking.isEmpty(automata));
 
-		List<Integer> word = EmptyChecking.getShortestAcceptedWord(automata);
+		List<Integer> word = EmptyChecking.findShortestAcceptedWord(automata);
 		Assert.assertNull(word);
 		
-		word = EmptyChecking.getAcceptedWord(automata);
+		word = EmptyChecking.findAcceptedWord(automata);
 		Assert.assertNull(word);
 	}
 	
@@ -53,10 +53,10 @@ public class EmptinessCheckingTest {
 		
 		Assert.assertFalse(EmptyChecking.isEmpty(automata));
 		
-		List<Integer> word = EmptyChecking.getShortestAcceptedWord(automata);
+		List<Integer> word = EmptyChecking.findShortestAcceptedWord(automata);
 		Assert.assertTrue(word.isEmpty());
 		
-		word = EmptyChecking.getAcceptedWord(automata);
+		word = EmptyChecking.findAcceptedWord(automata);
 		Assert.assertTrue(word.isEmpty());
 	}
 	
@@ -71,10 +71,10 @@ public class EmptinessCheckingTest {
 		
 		Assert.assertFalse(EmptyChecking.isEmpty(automata));
 		
-		List<Integer> word = EmptyChecking.getShortestAcceptedWord(automata);
+		List<Integer> word = EmptyChecking.findShortestAcceptedWord(automata);
 		Assert.assertEquals(Arrays.asList(2, 3), word);
 		
-		word = EmptyChecking.getAcceptedWord(automata);
+		word = EmptyChecking.findAcceptedWord(automata);
 		Assert.assertEquals(Arrays.asList(2, 3), word);
 	}
 	
@@ -88,10 +88,10 @@ public class EmptinessCheckingTest {
 		
 		Assert.assertFalse(EmptyChecking.isEmpty(automata));
 		
-		List<Integer> word = EmptyChecking.getShortestAcceptedWord(automata);
+		List<Integer> word = EmptyChecking.findShortestAcceptedWord(automata);
 		Assert.assertEquals(Arrays.asList(1), word);
 		
-		word = EmptyChecking.getAcceptedWord(automata);
+		word = EmptyChecking.findAcceptedWord(automata);
 		Assert.assertEquals(Arrays.asList(2, 1), word);
 	}
 }

@@ -30,10 +30,10 @@ public class InclusionCheckingImplTest {
 		boolean isSubset = inclusionChecking.isSubSet(automata, automata);
 		Assert.assertTrue(isSubset);
 		
-		List<Integer> counterExample =inclusionChecking.getShortestCounterExample(automata, automata);
+		List<Integer> counterExample =inclusionChecking.findShortestCounterExample(automata, automata);
 		Assert.assertNull(counterExample);
 		
-		counterExample =inclusionChecking.getCounterExample(automata, automata);
+		counterExample =inclusionChecking.findCounterExample(automata, automata);
 		Assert.assertNull(counterExample);
 	}
 	
@@ -57,10 +57,10 @@ public class InclusionCheckingImplTest {
 		boolean isSubset = inclusionChecking.isSubSet(automata1, automata2);
 		Assert.assertTrue(isSubset);
 		
-		List<Integer> counterExample =inclusionChecking.getShortestCounterExample(automata1, automata2);
+		List<Integer> counterExample =inclusionChecking.findShortestCounterExample(automata1, automata2);
 		Assert.assertNull(counterExample);
 		
-		counterExample =inclusionChecking.getCounterExample(automata1, automata2);
+		counterExample =inclusionChecking.findCounterExample(automata1, automata2);
 		Assert.assertNull(counterExample);
 	}
 	
@@ -84,11 +84,11 @@ public class InclusionCheckingImplTest {
 		boolean isSubset = inclusionChecking.isSubSet(automata1, automata2);
 		Assert.assertFalse(isSubset);
 		
-		List<Integer> counterExample =inclusionChecking.getShortestCounterExample(automata1, automata2);
+		List<Integer> counterExample =inclusionChecking.findShortestCounterExample(automata1, automata2);
 		Assert.assertEquals(1, counterExample.size());
 		Assert.assertTrue(counterExample.get(0) == 2);
 		
-		counterExample =inclusionChecking.getCounterExample(automata1, automata2);
+		counterExample =inclusionChecking.findCounterExample(automata1, automata2);
 		Assert.assertEquals(1, counterExample.size());
 		Assert.assertTrue(counterExample.get(0) == 2);
 	}
@@ -110,10 +110,10 @@ public class InclusionCheckingImplTest {
 		boolean isSubset = inclusionChecking.isSubSet(automata1, automata2);
 		Assert.assertFalse(isSubset);
 		
-		List<Integer> counterExample =inclusionChecking.getShortestCounterExample(automata1, automata2);
+		List<Integer> counterExample =inclusionChecking.findShortestCounterExample(automata1, automata2);
 		Assert.assertEquals(Arrays.asList(1, 2), counterExample);
 		
-		counterExample =inclusionChecking.getCounterExample(automata1, automata2);
+		counterExample =inclusionChecking.findCounterExample(automata1, automata2);
 		Assert.assertEquals(Arrays.asList(1, 2), counterExample);
 	}
 	
@@ -135,10 +135,10 @@ public class InclusionCheckingImplTest {
 		boolean isSubset = inclusionChecking.isSubSet(automata1, automata2);
 		Assert.assertTrue(isSubset);
 		
-		List<Integer> counterExample =inclusionChecking.getShortestCounterExample(automata1, automata2);
+		List<Integer> counterExample =inclusionChecking.findShortestCounterExample(automata1, automata2);
 		Assert.assertNull(counterExample);
 		
-		counterExample =inclusionChecking.getCounterExample(automata1, automata2);
+		counterExample =inclusionChecking.findCounterExample(automata1, automata2);
 		Assert.assertNull(counterExample);
 	}
 	
@@ -159,10 +159,10 @@ public class InclusionCheckingImplTest {
 		boolean isSubset = inclusionChecking.isSubSet(automata1, automata2);
 		Assert.assertFalse(isSubset);
 		
-		List<Integer> counterExample =inclusionChecking.getShortestCounterExample(automata1, automata2);
+		List<Integer> counterExample =inclusionChecking.findShortestCounterExample(automata1, automata2);
 		Assert.assertTrue(counterExample.isEmpty());
 		
-		counterExample =inclusionChecking.getCounterExample(automata1, automata2);
+		counterExample =inclusionChecking.findCounterExample(automata1, automata2);
 		Assert.assertTrue(counterExample.isEmpty());
 	}
 }

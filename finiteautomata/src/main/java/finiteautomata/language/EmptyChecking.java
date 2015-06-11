@@ -43,7 +43,7 @@ public class EmptyChecking {
 	 * Return word which is accepted by automata
 	 * Return null if the automata is empty
 	 */
-	public static List<Integer> getAcceptedWord(Automata automata) {
+	public static List<Integer> findAcceptedWord(Automata automata) {
 		boolean isEmpty = true;
 
 		Set<Integer> acceptingStates = automata.getAcceptingStates();
@@ -125,7 +125,7 @@ public class EmptyChecking {
 	 * Return shortest word which is accepted by automata
 	 * Return null if the automata is empty
 	 */
-	public static List<Integer> getShortestAcceptedWord(Automata automata) {
+	public static List<Integer> findShortestAcceptedWord(Automata automata) {
 		Set<Integer> acceptingStates = automata.getAcceptingStates();
 				
 		//all waiting states

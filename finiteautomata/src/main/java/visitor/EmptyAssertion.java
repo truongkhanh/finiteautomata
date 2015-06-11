@@ -25,7 +25,7 @@ public class EmptyAssertion extends Assertion{
 		StringBuilder result = new StringBuilder();
 		result.append("Automata " + labelAutomata.getName() + " accepts ");
 		
-		List<Integer> word = EmptyChecking.getShortestAcceptedWord(labelAutomata.getAutomata());
+		List<Integer> word = EmptyChecking.findShortestAcceptedWord(labelAutomata.getAutomata());
 		List<String> labels = labelAutomata.getLabels(word);
 		
 		result.append(getLabelWord(labels));

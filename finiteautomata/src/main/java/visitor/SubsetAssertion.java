@@ -39,7 +39,7 @@ public class SubsetAssertion extends Assertion{
 			return "Automata " + labelAutomata1.getName() + " is a subset of Automata " + labelAutomata2.getName() + ".";
 		}
 		
-		List<Integer> counterExample = new InclusionCheckingImpl().getShortestCounterExample(labelAutomata1.getAutomata(), completeDFA2);
+		List<Integer> counterExample = new InclusionCheckingImpl().findShortestCounterExample(labelAutomata1.getAutomata(), completeDFA2);
 		List<String> labels = labelAutomata1.getLabels(counterExample);
 		
 		StringBuilder result = new StringBuilder();

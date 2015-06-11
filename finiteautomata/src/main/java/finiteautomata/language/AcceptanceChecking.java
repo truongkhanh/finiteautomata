@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import finiteautomata.Automata;
 
-public class LanguageChecking {
+public class AcceptanceChecking {
 
 	public static boolean acceptsWord(Automata automata, int[] word) {
 		List<Integer> wordAsList = new ArrayList<Integer>();

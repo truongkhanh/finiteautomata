@@ -78,7 +78,7 @@ public class InclusionCheckingImpl implements InclusionChecking {
 	 * @return if not subset, return the word accepted by automata1, but not
 	 *         automata2
 	 */
-	public List<Integer> getCounterExample(Automata automata1, Automata completeDFA2) {
+	public List<Integer> findCounterExample(Automata automata1, Automata completeDFA2) {
 		// get accepting states
 		Set<Integer> acceptingStates1 = automata1.getAcceptingStates();
 		Set<Integer> acceptingStates2 = completeDFA2.getAcceptingStates();
@@ -173,7 +173,7 @@ public class InclusionCheckingImpl implements InclusionChecking {
 		return null;
 	}
 
-	public List<Integer> getShortestCounterExample(Automata automata1, Automata completeDFA2){
+	public List<Integer> findShortestCounterExample(Automata automata1, Automata completeDFA2){
 		// get accepting states
 		Set<Integer> acceptingStates1 = automata1.getAcceptingStates();
 		Set<Integer> acceptingStates2 = completeDFA2.getAcceptingStates();
