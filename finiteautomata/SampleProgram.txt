@@ -1,0 +1,21 @@
+automata A{
+init : s0;
+a, s0 -> s1;
+b, s1 -> s2;
+accepting: s1, s2;
+}
+
+automata B{
+init : s0;
+a, s0 -> s1;
+c, s0 -> s3;
+b, s1 -> s2;
+accepting: s0, s1, s2, s3;
+}
+
+check A empty;
+check B empty;
+check A universal;
+check B universal;
+check A subset B;
+check B subset A;

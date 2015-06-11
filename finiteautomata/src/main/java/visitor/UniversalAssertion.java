@@ -40,5 +40,10 @@ public class UniversalAssertion extends Assertion{
 		
 		return result.toString();
 	}
+	
+	@Override
+	public String toString() {
+		return "Check whether automata " + labelAutomata.getName() + " is universal";
+	}
 
 }

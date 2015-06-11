@@ -32,4 +32,9 @@ public class EmptyAssertion extends Assertion{
 		
 		return result.toString();
 	}
+	
+	@Override
+	public String toString() {
+		return "Check whether automata " + labelAutomata.getName() + " is empty";
+	}
 }

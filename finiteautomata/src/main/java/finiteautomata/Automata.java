@@ -133,6 +133,21 @@ public class Automata {
 		return true;
 	}
 	
+	public boolean isCompleteDFA(){
+		if(!isDFA()){
+			return false;
+		}
+		
+		for(State state: states){
+			Set<Integer> nextLabels = state.getOutgoingLabels();
+			if(nextLabels.size() < numLabels - 1){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
     public String toString() {
         String NEWLINE = System.getProperty("line.separator");
         StringBuilder s = new StringBuilder();

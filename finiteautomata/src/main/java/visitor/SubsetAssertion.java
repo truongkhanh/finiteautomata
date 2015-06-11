@@ -22,7 +22,9 @@ public class SubsetAssertion extends Assertion{
 		if(!completeDFA2.isDFA()){
 			completeDFA2 = AutomataConverter.toDFA(completeDFA2);
 		}
-		completeDFA2 = AutomataConverter.toCompleteDFA(completeDFA2);
+		if(!completeDFA2.isCompleteDFA()){
+			completeDFA2 = AutomataConverter.toCompleteDFA(completeDFA2);
+		}
 	}
 	
 	public boolean verify() {
@@ -47,6 +49,11 @@ public class SubsetAssertion extends Assertion{
 		result.append(getLabelWord(labels));
 		
 		return result.toString();
+	}
+	
+	@Override
+	public String toString() {
+		return "Check whether automata " + labelAutomata1.getName() + " is subset of automata " + labelAutomata2.getName();
 	}
 
 }

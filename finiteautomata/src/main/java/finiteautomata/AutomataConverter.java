@@ -68,32 +68,36 @@ public class AutomataConverter {
 	
 	public static Automata toCompleteDFA(Automata dfa){
 		int init = dfa.getInitState();
-		List<State> states = new ArrayList<State>(Arrays.asList(dfa.getStates()));
 		int numberOfLabels = dfa.getNumLabels();
+		List<State> states = new ArrayList<State>(Arrays.asList(dfa.getStates()));
 		Set<Integer> accepting = dfa.getAcceptingStates();
 		
-		State dummyState = new State(states.size());
+		Automata result = new Automata(init, states.size() + 1, numberOfLabels);
+		result.setAcceptingStates(new HashSet<Integer>(accepting));
 		
-		//loop at dummy
-		for(int i = 1; i < numberOfLabels; i++){
-			dummyState.addTrans(i, dummyState.getId());
-		}
+		int dummyState = states.size();
 		
-		//complement transitions to dummy
+		//copy transition
 		for(State state: states){
-			Set<Integer> nextLabels = state.getOutgoingLabels();
 			for(int i = 1; i < numberOfLabels; i++){
-				if(!nextLabels.contains(i)){
-					state.addTrans(i, dummyState.getId());
+				Set<Integer> nexts = state.getDest(i);
+				if(nexts.isEmpty()){
+					//add transition to dummy
+					result.addTrans(state.getId(), i, dummyState);
+				}
+				else{
+					for(int next: nexts){
+						result.addTrans(state.getId(), i, next);
+					}
 				}
 			}
 		}
 		
-		//
-		states.add(dummyState);
-		Automata result = new Automata(init, states, numberOfLabels);
-		result.setAcceptingStates(accepting);
-		
+		//loop at dummy
+		for(int i = 1; i < numberOfLabels; i++){
+			result.addTrans(dummyState, i, dummyState);
+		}
+				
 		return result;
 	}
 }

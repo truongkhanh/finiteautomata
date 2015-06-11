@@ -5,8 +5,6 @@ import java.io.Reader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import finiteautomata.language.InclusionChecking;
-import finiteautomata.language.InclusionCheckingImpl;
 import visitor.Specification;
 
 public class ToDFATest extends AbstractTest{
@@ -23,10 +21,6 @@ public class ToDFATest extends AbstractTest{
 		
 		Assert.assertEquals(2, dfa.getStates().length);
 		Assert.assertTrue(dfa.isDFA());
-		
-		InclusionChecking inclusionChecking = new InclusionCheckingImpl();
-		Assert.assertNull(inclusionChecking.isSubSet(automata, dfa));
-		Assert.assertNull(inclusionChecking.isSubSet(dfa, automata));
 	}
 	
 	@Test
@@ -41,10 +35,6 @@ public class ToDFATest extends AbstractTest{
 		
 		Assert.assertEquals(2, dfa.getStates().length);
 		Assert.assertTrue(dfa.isDFA());
-		
-		InclusionChecking inclusionChecking = new InclusionCheckingImpl();
-		Assert.assertNull(inclusionChecking.isSubSet(automata, dfa));
-		Assert.assertNull(inclusionChecking.isSubSet(dfa, automata));
 	}
 	
 	@Test
@@ -59,9 +49,6 @@ public class ToDFATest extends AbstractTest{
 		
 		Assert.assertEquals(4, dfa.getStates().length);
 		Assert.assertTrue(dfa.isDFA());
-		
-		InclusionChecking inclusionChecking = new InclusionCheckingImpl();
-		Assert.assertNull(inclusionChecking.isSubSet(automata, dfa));
-		Assert.assertNull(inclusionChecking.isSubSet(dfa, automata));
+
 	}
 }
