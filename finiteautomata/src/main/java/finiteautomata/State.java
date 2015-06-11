@@ -37,6 +37,15 @@ public class State {
 			return new HashSet<Integer>();
 		}
 	}
+	
+	public Set<Integer> getDest(){
+		Set<Integer> dest = new HashSet<Integer>();
+		for(Set<Integer> destOnLabel: outgoingTrans.values()){
+			dest.addAll(destOnLabel);
+		}
+		
+		return dest;
+	}
 
 	public int getId() {
 		return id;

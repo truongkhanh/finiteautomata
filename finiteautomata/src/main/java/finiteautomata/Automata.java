@@ -108,6 +108,13 @@ public class Automata {
 		return result;
 	}
 	
+	public Set<Integer> getEpsilonClosure(int fromState){
+		Set<Integer> fromStates = new HashSet<Integer>();
+		fromStates.add(fromState);
+		
+		return getEpsilonClosure(fromStates);
+	}
+	
 	public boolean isDFA(){
 		for(State state: states){
 			Set<Integer> nexts = state.getDest(0);

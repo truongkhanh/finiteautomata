@@ -1,7 +1,6 @@
 package finiteautomata.language;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -25,9 +24,7 @@ public class LanguageChecking {
 	public static boolean acceptsWord(Automata automata, List<Integer> word) {
 		Set<Integer> acceptingStates = automata.getAcceptingStates();
 
-		Set<Integer> initSet = new HashSet<Integer>();
-		initSet.add(automata.getInitState());
-		initSet = automata.getEpsilonClosure(initSet);
+		Set<Integer> initSet = automata.getEpsilonClosure(automata.getInitState());
 
 		// store nodes waiting to visit
 		Stack<Integer> workingStates = new Stack<Integer>();

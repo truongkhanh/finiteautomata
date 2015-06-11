@@ -1,6 +1,7 @@
 package finiteautomata;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,9 +15,7 @@ public class AutomataConverter {
 		Map<Set<Integer>, State> mapStates = new HashMap<Set<Integer>, State>();
 		
 		Stack<Set<Integer>> workingStates = new Stack<Set<Integer>>();
-		Set<Integer> initSet = new HashSet<Integer>();
-		initSet.add(automata.getInitState());
-		initSet = automata.getEpsilonClosure(initSet);
+		Set<Integer> initSet = automata.getEpsilonClosure(automata.getInitState());
 		
 		workingStates.push(initSet);
 		
@@ -65,5 +64,36 @@ public class AutomataConverter {
 		
 		//
 		return dfa;
+	}
+	
+	public static Automata toCompleteDFA(Automata dfa){
+		int init = dfa.getInitState();
+		List<State> states = new ArrayList<State>(Arrays.asList(dfa.getStates()));
+		int numberOfLabels = dfa.getNumLabels();
+		Set<Integer> accepting = dfa.getAcceptingStates();
+		
+		State dummyState = new State(states.size());
+		
+		//loop at dummy
+		for(int i = 1; i < numberOfLabels; i++){
+			dummyState.addTrans(i, dummyState.getId());
+		}
+		
+		//complement transitions to dummy
+		for(State state: states){
+			Set<Integer> nextLabels = state.getOutgoingLabels();
+			for(int i = 1; i < numberOfLabels; i++){
+				if(!nextLabels.contains(i)){
+					state.addTrans(i, dummyState.getId());
+				}
+			}
+		}
+		
+		//
+		states.add(dummyState);
+		Automata result = new Automata(init, states, numberOfLabels);
+		result.setAcceptingStates(accepting);
+		
+		return result;
 	}
 }

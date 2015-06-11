@@ -6,5 +6,7 @@ import finiteautomata.Automata;
 
 public interface InclusionChecking {
 
-	public List<Integer> isSubSet(Automata automata1, Automata automata2);
+	public boolean isSubSet(Automata automata1, Automata automata2);
+	public List<Integer> getCounterExample(Automata automata1, Automata automata2);
+	public List<Integer> getShortestCounterExample(Automata automata1, Automata automata2);
 }

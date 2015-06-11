@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import finiteautomata.Automata;
+import finiteautomata.State;
 
 public class EmptyChecking {
 	public static boolean isEmpty(Automata automata) {
@@ -25,14 +26,12 @@ public class EmptyChecking {
 				return false;
 			}
 
-			for (int i = 0; i < automata.getNumLabels(); i++) {
-				Set<Integer> dests = automata.getStates()[currentState].getDest(i);
-				for (int dest : dests) {
-					if (!isVisited[dest]) {
-						workingStates.push(dest);
+			Set<Integer> dests = automata.getStates()[currentState].getDest();
+			for (int dest : dests) {
+				if (!isVisited[dest]) {
+					workingStates.push(dest);
 
-						isVisited[dest] = true;
-					}
+					isVisited[dest] = true;
 				}
 			}
 		}
@@ -96,12 +95,13 @@ public class EmptyChecking {
 				break;
 			}
 
-			for (int i = 0; i < automata.getNumLabels(); i++) {
-				Set<Integer> dests = automata.getStates()[currentState].getDest(i);
+			State state = automata.getStates()[currentState];
+			for(int nextLabel : state.getOutgoingLabels()){
+				Set<Integer> dests = automata.getStates()[currentState].getDest(nextLabel);
 				for (int dest : dests) {
 					if (!isVisited[dest]) {
 						workingStates.push(dest);
-						labels.push(i);
+						labels.push(nextLabel);
 						depthStack.push(depthLevel + 1);
 
 						isVisited[dest] = true;
@@ -116,33 +116,22 @@ public class EmptyChecking {
 			// remove dummy
 			path.remove(0);
 
-			path = removeEmptyLabel(path);
+			path = WordUtils.removeEmptyLabel(path);
 			return path;
 		}
-	}
-
-	private static List<Integer> removeEmptyLabel(List<Integer> path) {
-		List<Integer> result = new ArrayList<Integer>();
-		for(int label: path){
-			if(label != Automata.EPSILON_LABEL){
-				result.add(label);
-			}
-		}
-		
-		return result;
 	}
 	
 	/**
 	 * Return shortest word which is accepted by automata
 	 * Return null if the automata is empty
 	 */
-	public static List<Integer> getShortestAcceptedWord(Automata dfa) {
-		Set<Integer> acceptingStates = dfa.getAcceptingStates();
+	public static List<Integer> getShortestAcceptedWord(Automata automata) {
+		Set<Integer> acceptingStates = automata.getAcceptingStates();
 				
 		//all waiting states
         List<Integer> working = new ArrayList<Integer>();
         //add init
-        working.add(dfa.getInitState());
+        working.add(automata.getInitState());
         
         //for each state, store the path from root to it
         List<List<Integer>> paths = new ArrayList<List<Integer>>();
@@ -150,25 +139,26 @@ public class EmptyChecking {
         paths.add(new ArrayList<Integer>());
                 
 		// check whether a node is visited or not
-		boolean [] isVisited = new boolean[dfa.getStates().length];
-  		isVisited[dfa.getInitState()] = true;
+		boolean [] isVisited = new boolean[automata.getStates().length];
+  		isVisited[automata.getInitState()] = true;
         while (working.size() > 0)
         {
             int currentState = working.remove(0);
             List<Integer> currentPath = paths.remove(0);
             
             if (acceptingStates.contains(currentState)) {
-				return removeEmptyLabel(currentPath);
+				return WordUtils.removeEmptyLabel(currentPath);
 			}
             
-            for (int i = 0; i < dfa.getNumLabels(); i++) {
-				Set<Integer> dests = dfa.getStates()[currentState].getDest(i);
+            State state = automata.getStates()[currentState];
+			for(int nextLabel : state.getOutgoingLabels()){
+				Set<Integer> dests = automata.getStates()[currentState].getDest(nextLabel);
 				for (int dest : dests) {
 					if (!isVisited[dest]) {
 						working.add(dest);
 
 						List<Integer> pathToChild = new ArrayList<Integer>(currentPath);
-						pathToChild.add(i);
+						pathToChild.add(nextLabel);
 	            		paths.add(pathToChild);
 						
 						isVisited[dest] = true;

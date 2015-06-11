@@ -2,37 +2,47 @@ package visitor;
 
 import java.util.List;
 
-import finiteautomata.language.AntichainInclusionChecking;
+import finiteautomata.Automata;
+import finiteautomata.AutomataConverter;
 import finiteautomata.language.InclusionChecking;
+import finiteautomata.language.InclusionCheckingImpl;
 
 public class SubsetAssertion extends Assertion{
 
 	private LabelAutomata labelAutomata1;
 	private LabelAutomata labelAutomata2;
-
-	private List<Integer> counterExample;
+	private Automata completeDFA2;
+	
+	private boolean isSubset;
 	public SubsetAssertion(LabelAutomata labelAutomata1, LabelAutomata labelAutomata2){
 		this.labelAutomata1 = labelAutomata1;
 		this.labelAutomata2 = labelAutomata2;
+		
+		completeDFA2 = this.labelAutomata2.getAutomata();
+		if(!completeDFA2.isDFA()){
+			completeDFA2 = AutomataConverter.toDFA(completeDFA2);
+		}
+		completeDFA2 = AutomataConverter.toCompleteDFA(completeDFA2);
 	}
 	
 	public boolean verify() {
-		InclusionChecking inclusionChecking = new AntichainInclusionChecking();
-		counterExample = inclusionChecking.isSubSet(labelAutomata1.getAutomata(), labelAutomata2.getAutomata());
+		InclusionChecking inclusionChecking = new InclusionCheckingImpl();
+		isSubset = inclusionChecking.isSubSet(labelAutomata1.getAutomata(), completeDFA2);
 		
-		
-		return counterExample == null;
+		return isSubset;
 	}
 
 	public String getResult() {
-		if(counterExample == null){
+		if(isSubset){
 			return "Automata " + labelAutomata1.getName() + " is a subset of Automata " + labelAutomata2.getName() + ".";
 		}
+		
+		List<Integer> counterExample = new InclusionCheckingImpl().getShortestCounterExample(labelAutomata1.getAutomata(), completeDFA2);
+		List<String> labels = labelAutomata1.getLabels(counterExample);
+		
 		StringBuilder result = new StringBuilder();
 		result.append("Automata " + labelAutomata1.getName() + " is not a subset of Automata " + labelAutomata2.getName() + ". ");
 		result.append("Automata " + labelAutomata2.getName() + " does not accept ");
-		
-		List<String> labels = labelAutomata1.getLabels(counterExample);
 		
 		result.append(getLabelWord(labels));
 		

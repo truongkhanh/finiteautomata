@@ -33,6 +33,7 @@ public class UniversalChecking {
 			
 			for(int i = 1; i < dfa.getNumLabels(); i++){
 				Set<Integer> dests = dfa.getStates()[currentState].getDest(i);
+				//since dfa, dests has at most 1 state
 				dests.retainAll(acceptingStates);
 				
 				//if dfa does not accept the label i, it is not universal
@@ -87,6 +88,7 @@ public class UniversalChecking {
             
             for (int i = 1; i < dfa.getNumLabels(); i++) {
 				Set<Integer> dests = dfa.getStates()[currentState].getDest(i);
+				//since dfa, dests has at most 1 state
 				dests.retainAll(acceptingStates);
 
 				// if dfa does not accept the label i, it is not universal
@@ -170,6 +172,7 @@ public class UniversalChecking {
 
 			for(int i = 1; i < dfa.getNumLabels(); i++){
 				Set<Integer> dests = dfa.getStates()[currentState].getDest(i);
+				//since dfa, dests has at most 1 state
 				dests.retainAll(acceptingStates);
 				
 				//if dfa does not accept the label i, it is not universal
