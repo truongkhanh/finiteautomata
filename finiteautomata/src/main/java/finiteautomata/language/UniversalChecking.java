@@ -31,7 +31,7 @@ public class UniversalChecking {
 		while(!workingStates.isEmpty()){
 			int currentState = workingStates.pop();
 			
-			for(int i = 1; i < dfa.getNumLabels(); i++){
+			for(int i = 0; i < dfa.getNumLabels(); i++){
 				Set<Integer> dests = dfa.getStates()[currentState].getDest(i);
 				//since dfa, dests has at most 1 state
 				dests.retainAll(acceptingStates);
@@ -86,7 +86,7 @@ public class UniversalChecking {
             int currentState = working.remove(0);
             List<Integer> currentPath = paths.remove(0);
             
-            for (int i = 1; i < dfa.getNumLabels(); i++) {
+            for (int i = 0; i < dfa.getNumLabels(); i++) {
 				Set<Integer> dests = dfa.getStates()[currentState].getDest(i);
 				//since dfa, dests has at most 1 state
 				dests.retainAll(acceptingStates);
@@ -170,7 +170,7 @@ public class UniversalChecking {
 			path.add(label);
 			depthList.add(depthLevel);
 
-			for(int i = 1; i < dfa.getNumLabels(); i++){
+			for(int i = 0; i < dfa.getNumLabels(); i++){
 				Set<Integer> dests = dfa.getStates()[currentState].getDest(i);
 				//since dfa, dests has at most 1 state
 				dests.retainAll(acceptingStates);

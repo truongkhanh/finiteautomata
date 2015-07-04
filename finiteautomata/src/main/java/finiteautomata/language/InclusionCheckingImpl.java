@@ -97,7 +97,7 @@ public class InclusionCheckingImpl implements InclusionChecking {
 		Stack<Integer> working1 = new Stack<Integer>();
 		Stack<Integer> working2 = new Stack<Integer>();
 		Stack<Integer> labels = new Stack<Integer>();
-		int INIT_LABEL = -1;
+		int DUMMY_LABEL = -1;
 
 		// for each node in workingStates, store its depth level
 		Stack<Integer> depthStack = new Stack<Integer>();
@@ -106,7 +106,7 @@ public class InclusionCheckingImpl implements InclusionChecking {
 		for(int init1: initClosure1){
 			working1.push(init1);
 			working2.push(completeDFA2.getInitState());
-			labels.push(INIT_LABEL);
+			labels.push(DUMMY_LABEL);
 			depthStack.push(0);
 		}
 

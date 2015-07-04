@@ -3,7 +3,6 @@ package finiteautomata;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,11 +17,11 @@ public class InclusionCheckingImplTest {
 	
 	@Test
 	public void whenTwoAutomataAreSame(){
-		Automata automata = new Automata(0, 3, 3);
+		Automata automata = new Automata(0, 3, 2);
+		automata.addTrans(0, 0, 1);
 		automata.addTrans(0, 1, 1);
-		automata.addTrans(0, 2, 1);
+		automata.addTrans(1, 0, 2);
 		automata.addTrans(1, 1, 2);
-		automata.addTrans(1, 2, 2);
 		automata.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1, 2)));
 		
 		automata = AutomataConverter.toCompleteDFA(AutomataConverter.toDFA(automata));
@@ -39,17 +38,17 @@ public class InclusionCheckingImplTest {
 	
 	@Test
 	public void whenOneAutomatonIsSubsetButNotEqual(){
-		Automata automata1 = new Automata(0, 3, 3);
-		automata1.addTrans(0, 1, 1);
+		Automata automata1 = new Automata(0, 3, 2);
+		automata1.addTrans(0, 0, 1);
+		automata1.addTrans(1, 0, 2);
 		automata1.addTrans(1, 1, 2);
-		automata1.addTrans(1, 2, 2);
 		automata1.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1, 2)));
 		
-		Automata automata2 = new Automata(0, 3, 3);
+		Automata automata2 = new Automata(0, 3, 2);
+		automata2.addTrans(0, 0, 1);
 		automata2.addTrans(0, 1, 1);
-		automata2.addTrans(0, 2, 1);
+		automata2.addTrans(1, 0, 2);
 		automata2.addTrans(1, 1, 2);
-		automata2.addTrans(1, 2, 2);
 		automata2.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1, 2)));
 		
 		automata2 = AutomataConverter.toCompleteDFA(AutomataConverter.toDFA(automata2));
@@ -66,17 +65,17 @@ public class InclusionCheckingImplTest {
 	
 	@Test
 	public void whenNotSubSetBecauseOneLabelIsNotEnabled(){
-		Automata automata1 = new Automata(0, 3, 3);
+		Automata automata1 = new Automata(0, 3, 2);
+		automata1.addTrans(0, 0, 1);
 		automata1.addTrans(0, 1, 1);
-		automata1.addTrans(0, 2, 1);
+		automata1.addTrans(1, 0, 2);
 		automata1.addTrans(1, 1, 2);
-		automata1.addTrans(1, 2, 2);
 		automata1.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1, 2)));
 		
-		Automata automata2 = new Automata(0, 3, 3);
-		automata2.addTrans(0, 1, 1);
+		Automata automata2 = new Automata(0, 3, 2);
+		automata2.addTrans(0, 0, 1);
+		automata2.addTrans(1, 0, 2);
 		automata2.addTrans(1, 1, 2);
-		automata2.addTrans(1, 2, 2);
 		automata2.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1, 2)));
 		
 		automata2 = AutomataConverter.toCompleteDFA(AutomataConverter.toDFA(automata2));
@@ -86,23 +85,23 @@ public class InclusionCheckingImplTest {
 		
 		List<Integer> counterExample =inclusionChecking.findShortestCounterExample(automata1, automata2);
 		Assert.assertEquals(1, counterExample.size());
-		Assert.assertTrue(counterExample.get(0) == 2);
+		Assert.assertTrue(counterExample.get(0) == 1);
 		
 		counterExample =inclusionChecking.findCounterExample(automata1, automata2);
 		Assert.assertEquals(1, counterExample.size());
-		Assert.assertTrue(counterExample.get(0) == 2);
+		Assert.assertTrue(counterExample.get(0) == 1);
 	}
 	
 	@Test
 	public void whenNotSubSetBecauseNextStateIsNotAccepted(){
-		Automata automata1 = new Automata(0, 3, 3);
-		automata1.addTrans(0, 1, 1);
-		automata1.addTrans(1, 2, 2);
+		Automata automata1 = new Automata(0, 3, 2);
+		automata1.addTrans(0, 0, 1);
+		automata1.addTrans(1, 1, 2);
 		automata1.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1, 2)));
 		
-		Automata automata2 = new Automata(0, 3, 3);
-		automata2.addTrans(0, 1, 1);
-		automata2.addTrans(1, 2, 2);
+		Automata automata2 = new Automata(0, 3, 2);
+		automata2.addTrans(0, 0, 1);
+		automata2.addTrans(1, 1, 2);
 		automata2.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1)));
 		
 		automata2 = AutomataConverter.toCompleteDFA(AutomataConverter.toDFA(automata2));
@@ -111,23 +110,23 @@ public class InclusionCheckingImplTest {
 		Assert.assertFalse(isSubset);
 		
 		List<Integer> counterExample =inclusionChecking.findShortestCounterExample(automata1, automata2);
-		Assert.assertEquals(Arrays.asList(1, 2), counterExample);
+		Assert.assertEquals(Arrays.asList(0, 1), counterExample);
 		
 		counterExample =inclusionChecking.findCounterExample(automata1, automata2);
-		Assert.assertEquals(Arrays.asList(1, 2), counterExample);
+		Assert.assertEquals(Arrays.asList(0, 1), counterExample);
 	}
 	
 	@Test
 	public void whenSubSetAndAutomata2ContainsEpsilon(){
-		Automata automata1 = new Automata(0, 3, 3);
-		automata1.addTrans(0, 1, 1);
-		automata1.addTrans(1, 2, 2);
+		Automata automata1 = new Automata(0, 3, 2);
+		automata1.addTrans(0, 0, 1);
+		automata1.addTrans(1, 1, 2);
 		automata1.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1, 2)));
 		
-		Automata automata2 = new Automata(0, 4, 3);
-		automata2.addTrans(0, 1, 1);
-		automata2.addTrans(1, 0, 2);
-		automata2.addTrans(2, 2, 3);
+		Automata automata2 = new Automata(0, 4, 2);
+		automata2.addTrans(0, 0, 1);
+		automata2.addTrans(1, Automata.EPSILON_LABEL, 2);
+		automata2.addTrans(2, 1, 3);
 		automata2.setAcceptingStates(new HashSet<Integer>(Arrays.asList(2, 3)));
 		
 		automata2 = AutomataConverter.toCompleteDFA(AutomataConverter.toDFA(automata2));
@@ -144,14 +143,14 @@ public class InclusionCheckingImplTest {
 	
 	@Test
 	public void whenNotSubSetBecauseNotAcceptEmptyWord(){
-		Automata automata1 = new Automata(0, 3, 3);
-		automata1.addTrans(0, 1, 1);
-		automata1.addTrans(1, 2, 2);
+		Automata automata1 = new Automata(0, 3, 2);
+		automata1.addTrans(0, 0, 1);
+		automata1.addTrans(1, 1, 2);
 		automata1.setAcceptingStates(new HashSet<Integer>(Arrays.asList(0, 1, 2)));
 		
-		Automata automata2 = new Automata(0, 3, 3);
-		automata2.addTrans(0, 1, 1);
-		automata2.addTrans(1, 2, 2);
+		Automata automata2 = new Automata(0, 3, 2);
+		automata2.addTrans(0, 0, 1);
+		automata2.addTrans(1, 1, 2);
 		automata2.setAcceptingStates(new HashSet<Integer>(Arrays.asList(1, 2)));
 		
 		automata2 = AutomataConverter.toCompleteDFA(AutomataConverter.toDFA(automata2));

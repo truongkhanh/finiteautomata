@@ -28,7 +28,7 @@ public class AutomataConverter {
 			Set<Integer> statesInNFA = workingStates.pop();
 			State stateInDFA = mapStates.get(statesInNFA);
 			
-			for(int i = 1; i < automata.getNumLabels(); i++){
+			for(int i = 0; i < automata.getNumLabels(); i++){
 				Set<Integer> destsInNFA = automata.getEpsilonClosure(automata.getDests(statesInNFA, i));
 				
 				if(!destsInNFA.isEmpty()){
@@ -48,7 +48,7 @@ public class AutomataConverter {
 			}
 		}
 		
-		Automata dfa = new Automata(0, allStatesDFA, automata.getNumLabels());
+		Automata dfa = new Automata(initInDFA.getId(), allStatesDFA, automata.getNumLabels());
 		
 		//compute accepting states
 		Set<Integer> acceptingDFA = new HashSet<Integer>();
@@ -79,7 +79,7 @@ public class AutomataConverter {
 		
 		//copy transition
 		for(State state: states){
-			for(int i = 1; i < numberOfLabels; i++){
+			for(int i = 0; i < numberOfLabels; i++){
 				Set<Integer> nexts = state.getDest(i);
 				if(nexts.isEmpty()){
 					//add transition to dummy
@@ -94,7 +94,7 @@ public class AutomataConverter {
 		}
 		
 		//loop at dummy
-		for(int i = 1; i < numberOfLabels; i++){
+		for(int i = 0; i < numberOfLabels; i++){
 			result.addTrans(dummyState, i, dummyState);
 		}
 				

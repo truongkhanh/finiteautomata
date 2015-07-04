@@ -30,10 +30,11 @@ public class DotGraphiczUltility {
 		result.append(NEW_LINE);
 		
 		for(State state: automata.getStates()){
-			for(int i = 0; i < automata.getNumLabels(); i++){
+			for(int i = Automata.EPSILON_LABEL; i < automata.getNumLabels(); i++){
+				String label = (i == Automata.EPSILON_LABEL)? "": labelAutomata.getLabel(i);
 				Set<Integer> nexts = state.getDest(i);
 				for(Integer next: nexts){
-					result.append(labelAutomata.getState(state.getId()) + " -> " + labelAutomata.getState(next) + " [ label = \"" + labelAutomata.getLabel(i) + "\" ];");
+					result.append(labelAutomata.getState(state.getId()) + " -> " + labelAutomata.getState(next) + " [ label = \"" + label + "\" ];");
 					result.append(NEW_LINE);
 				}
 			}
@@ -67,10 +68,11 @@ public class DotGraphiczUltility {
 		result.append(NEW_LINE);
 		
 		for(State state: automata.getStates()){
-			for(int i = 0; i < automata.getNumLabels(); i++){
+			for(int i = Automata.EPSILON_LABEL; i < automata.getNumLabels(); i++){
+				String label = (i == Automata.EPSILON_LABEL)? "": String.valueOf(i);
 				Set<Integer> nexts = state.getDest(i);
 				for(Integer next: nexts){
-					result.append(state.getId() + " -> " + next + " [ label = \"" + i + "\" ];");
+					result.append(state.getId() + " -> " + next + " [ label = \"" + label + "\" ];");
 					result.append(NEW_LINE);
 				}
 			}

@@ -58,8 +58,6 @@ public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 		edges = new ArrayList<Edge>();
 		acceptingStates = new HashSet<Integer>();
 		
-		mapLabelToIndex.put("", 0);
-		
 		String name = p.ident_;
 		
 		p.automatainitrule_.accept(this, arg);
@@ -102,7 +100,7 @@ public class AllVisitorImpl implements AllVisitor<Object, Specification>{
 		int source = getIndex(p.name_1, mapStateToIndex);
 		int dest = getIndex(p.name_2, mapStateToIndex);
 		
-		Edge edge = new Edge(source, 0, dest);
+		Edge edge = new Edge(source, finiteautomata.Automata.EPSILON_LABEL, dest);
 		edges.add(edge);
 		
 		return null;

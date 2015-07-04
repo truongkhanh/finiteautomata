@@ -8,18 +8,18 @@ import java.util.Stack;
 
 /**
  * States are labeled from 0 to V-1 where V is number of states.
- * Labels are numbered from 0. Label 0 is preserved for epsilon label (empty label)
+ * Labels are numbered from 0. Label -1 is preserved for epsilon label (empty label)
  * @author khanh
  *
  */
 public class Automata {
-	public static int EPSILON_LABEL = 0;
+	public static int EPSILON_LABEL = -1;
 	
 	private int initState;
 	private State[] states;
 	
 	/**
-	 * Number of labels in this automata. include 0 for epsilon (empty) label
+	 * Number of labels in this automata. exclude -1 for epsilon label
 	 */
 	private int numLabels;
 	
@@ -117,12 +117,12 @@ public class Automata {
 	
 	public boolean isDFA(){
 		for(State state: states){
-			Set<Integer> nexts = state.getDest(0);
+			Set<Integer> nexts = state.getDest(EPSILON_LABEL);
 			if(!nexts.isEmpty()){
 				return false;
 			}
 			
-			for(int i = 1; i < numLabels; i++){
+			for(int i = 0; i < numLabels; i++){
 				nexts = state.getDest(i);
 				if(nexts.size() > 1){
 					return false;
@@ -140,7 +140,7 @@ public class Automata {
 		
 		for(State state: states){
 			Set<Integer> nextLabels = state.getOutgoingLabels();
-			if(nextLabels.size() < numLabels - 1){
+			if(nextLabels.size() != numLabels){
 				return false;
 			}
 		}
