@@ -49,8 +49,8 @@ public class InclusionCheckingImpl implements InclusionChecking {
 
 			State state1 = automata1.getStates()[currentState1];
 			State state2 = completeDFA2.getStates()[currentState2];
-			for (int nextLabel : state1.getOutgoingLabels()) {
-				Set<Integer> dests1 = state1.getDest(nextLabel);
+			for(int nextLabel = 0; nextLabel < automata1.getNumLabels(); nextLabel++){
+				Set<Integer> dests1 = automata1.getEpsilonClosure(state1.getDest(nextLabel));
 				Set<Integer> dests2 = state2.getDest(nextLabel);
 
 				for (int dest1 : dests1) {
@@ -149,8 +149,8 @@ public class InclusionCheckingImpl implements InclusionChecking {
 
 			State state1 = automata1.getStates()[currentState1];
 			State state2 = completeDFA2.getStates()[currentState2];
-			for (int nextLabel : state1.getOutgoingLabels()) {
-				Set<Integer> dests1 = state1.getDest(nextLabel);
+			for(int nextLabel = 0; nextLabel < automata1.getNumLabels(); nextLabel++){
+				Set<Integer> dests1 = automata1.getEpsilonClosure(state1.getDest(nextLabel));
 				Set<Integer> dests2 = state2.getDest(nextLabel);
 
 				for (int dest1 : dests1) {
@@ -213,8 +213,8 @@ public class InclusionCheckingImpl implements InclusionChecking {
             
 			State state1 = automata1.getStates()[currentState1];
 			State state2 = completeDFA2.getStates()[currentState2];
-			for (int nextLabel : state1.getOutgoingLabels()) {
-				Set<Integer> dests1 = state1.getDest(nextLabel);
+			for(int nextLabel = 0; nextLabel < automata1.getNumLabels(); nextLabel++){
+				Set<Integer> dests1 = automata1.getEpsilonClosure(state1.getDest(nextLabel));
 				Set<Integer> dests2 = state2.getDest(nextLabel);
 
 				for (int dest1 : dests1) {

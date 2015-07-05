@@ -90,17 +90,19 @@ public class Automata {
 		workingStates.addAll(fromStates);
 		
 		boolean [] isVisited = new boolean[states.length];
+		for(int fromState: fromStates){
+			isVisited[fromState] = true;
+		}
+		
 		while(!workingStates.isEmpty()){
 			int currentState = workingStates.pop();
-			isVisited[currentState] = true;
-
 			result.add(currentState);
 			
 			//add new states to workingState
 			for(int child: states[currentState].getDest(EPSILON_LABEL)){
 				if(!isVisited[child]){
+					isVisited[child] = true;
 					workingStates.push(child);
-					
 				}
 			}
 		}
