@@ -13,11 +13,11 @@ public class UniversalCheckingTest {
 
 	@Test
 	public void whenLanguageIsUnivesal(){
-		Automata automata = new Automata(0, 2, 3);
+		Automata automata = new Automata(0, 2, 2);
+		automata.addTrans(0, 0, 1);
 		automata.addTrans(0, 1, 1);
-		automata.addTrans(0, 2, 1);
+		automata.addTrans(1, 0, 1);
 		automata.addTrans(1, 1, 1);
-		automata.addTrans(1, 2, 1);
 		
 		Set<Integer> acceptingStates = new HashSet<Integer>();
 		acceptingStates.add(0);
@@ -39,10 +39,10 @@ public class UniversalCheckingTest {
 	
 	@Test
 	public void whenLanguageIsNotUnivesal(){
-		Automata automata = new Automata(0, 2, 3);
+		Automata automata = new Automata(0, 2, 2);
+		automata.addTrans(0, 0, 1);
 		automata.addTrans(0, 1, 1);
-		automata.addTrans(0, 2, 1);
-		automata.addTrans(1, 1, 1);
+		automata.addTrans(1, 0, 1);
 		
 		Set<Integer> acceptingStates = new HashSet<Integer>();
 		acceptingStates.add(0);
@@ -57,7 +57,7 @@ public class UniversalCheckingTest {
 		
 		List<Integer> word = UniversalChecking.findShortestUnacceptingWords(automata);
 		Assert.assertEquals(2, word.size());
-		Assert.assertTrue(word.get(1) == 2);
+		Assert.assertTrue(word.get(1) == 1);
 		
 		word = UniversalChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(word.size() >= 2);
@@ -65,11 +65,11 @@ public class UniversalCheckingTest {
 	
 	@Test
 	public void whenLanguageDoesNotAcceptEmptyLabel(){
-		Automata automata = new Automata(0, 2, 3);
+		Automata automata = new Automata(0, 2, 2);
+		automata.addTrans(0, 0, 1);
 		automata.addTrans(0, 1, 1);
-		automata.addTrans(0, 2, 1);
+		automata.addTrans(1, 0, 1);
 		automata.addTrans(1, 1, 1);
-		automata.addTrans(1, 2, 1);
 		
 		Set<Integer> acceptingStates = new HashSet<Integer>();
 		acceptingStates.add(1);
@@ -90,11 +90,11 @@ public class UniversalCheckingTest {
 	
 	@Test
 	public void whenFirstUnAcceptingIsNotShortest(){
-		Automata automata = new Automata(0, 4, 3);
-		automata.addTrans(0, 2, 1);
-		automata.addTrans(0, 1, 3);
+		Automata automata = new Automata(0, 4, 2);
+		automata.addTrans(0, 1, 1);
+		automata.addTrans(0, 0, 3);
+		automata.addTrans(1, 0, 2);
 		automata.addTrans(1, 1, 2);
-		automata.addTrans(1, 2, 2);
 		
 		Set<Integer> acceptingStates = new HashSet<Integer>();
 		acceptingStates.add(0);
@@ -111,10 +111,10 @@ public class UniversalCheckingTest {
 		
 		List<Integer> word = UniversalChecking.findShortestUnacceptingWords(automata);
 		Assert.assertEquals(2, word.size());
-		Assert.assertTrue(word.get(0) == 1);
+		Assert.assertTrue(word.get(0) == 0);
 		
 		word = UniversalChecking.findUnacceptingWord(automata);
 		Assert.assertTrue(word.size() > 2);
-		Assert.assertTrue(word.get(0) == 2);
+		Assert.assertTrue(word.get(0) == 1);
 	}
 }

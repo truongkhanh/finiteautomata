@@ -100,4 +100,29 @@ public class AutomataConverter {
 				
 		return result;
 	}
+	
+	public static Automata getComplement(Automata automata){
+		if(!automata.isDFA()){
+			automata = toDFA(automata);
+		}
+		
+		if(!automata.isCompleteDFA()){
+			automata = toCompleteDFA(automata);
+		}
+		
+		Automata result = new Automata(automata.getInitState(), Arrays.asList(automata.getStates()), automata.getNumLabels());
+		
+		Set<Integer> acceptings = automata.getAcceptingStates();
+		Set<Integer> complementAccepting = new HashSet<Integer>();
+		for(int state = 0; state < automata.getStates().length; state++){
+			if(!acceptings.contains(state)){
+				complementAccepting.add(state);
+			}
+		}
+		
+		result.setAcceptingStates(complementAccepting);
+		
+		return result;
+	}
+
 }
